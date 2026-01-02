@@ -1,0 +1,460 @@
+name: Deploy to AWS Free Tier EC2
+
+on:
+  workflow_call:
+
+env:
+  REGISTRY: docker.io
+  IMAGE_PREFIX: ilhamrhmtkbr/iamra-course
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Generate Secrets
+        id: secrets
+        run: |
+          JWT_SECRET=$(openssl rand -base64 64)
+          APP_KEY="base64:$(openssl rand -base64 32)"
+          BUILD_TAG="build-$(date +%Y%m%d-%H%M%S)-${GITHUB_SHA:0:7}"
+
+          echo "jwt_secret=$JWT_SECRET" >> $GITHUB_OUTPUT
+          echo "app_key=$APP_KEY" >> $GITHUB_OUTPUT
+          echo "build_tag=$BUILD_TAG" >> $GITHUB_OUTPUT
+
+          echo "::add-mask::$JWT_SECRET"
+          echo "::add-mask::$APP_KEY"
+
+      - name: Build React Applications
+        env:
+          VITE_API_KEY_OPEN_CAGE_DATA: ${{ secrets.VITE_API_KEY_OPEN_CAGE_DATA }}
+          VITE_API_KEY_RECAPTCHA: ${{ secrets.VITE_API_KEY_RECAPTCHA }}
+          VITE_CLIENT_GOOGLE: ${{ secrets.VITE_CLIENT_GOOGLE }}
+        run: |
+          echo "Building React applications..."
+
+          FRONTENDS=("user" "instructor" "student" "public" "forum")
+
+          for frontend in "${FRONTENDS[@]}"; do
+            if [ -d "frontend-$frontend" ]; then
+              echo "Building frontend-$frontend..."
+              cd "frontend-$frontend"
+              cp ../docker/prod/frontend-react/.env.shared .env
+
+              npm ci --silent --prefer-offline
+              npm install terser --prefer-offline --save-dev
+
+              NODE_OPTIONS="--max-old-space-size=4096" npm run build
+
+              if [ ! -d "dist" ]; then
+                echo "Build failed for frontend-$frontend"
+                exit 1
+              fi
+
+              cd ..
+            fi
+          done
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login docker.io -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Create Production Environment Files
+        run: |
+          cat > .env.secret-shared << 'EOF'
+          APP_KEY=${{ steps.secrets.outputs.app_key }}
+          DB_HOST=${{ secrets.DB_HOST }}
+          DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+          DB_MONGODB_URI=${{ secrets.DB_MONGODB_URI }}
+          LOG_SLACK_WEBHOOK_URL=${{ secrets.LOG_SLACK_WEBHOOK_URL }}
+          MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}
+          MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}
+          JWT_SECRET=${{ steps.secrets.outputs.jwt_secret }}
+          REDIS_HOST=${{ secrets.REDIS_HOST }}
+          REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}
+          REDIS_PORT=${{ secrets.REDIS_PORT }}
+          EOF
+
+          cat > .env.secret-user << 'EOF'
+          APP_URL=https://api-user.course.iamra.site
+          AUTH_GUARD=api
+          JWT_COOKIE_DOMAIN_PROD=.iamra.site
+          BROADCAST_CONNECTION=reverb
+          REVERB_APP_ID=${{ secrets.USER_REVERB_APP_ID }}
+          REVERB_APP_KEY=${{ secrets.USER_REVERB_APP_KEY }}
+          REVERB_APP_SECRET=${{ secrets.USER_REVERB_APP_SECRET }}
+          REVERB_HOST=backend-api-user-reverb
+          REVERB_PORT=8080
+          REVERB_SCHEME=http
+          RECAPTCHA_SECRET_KEY=${{ secrets.RECAPTCHA_SECRET_KEY }}
+          EOF
+
+          cat > .env.secret-student << 'EOF'
+          APP_URL=https://api-student.course.iamra.site
+          MIDTRANS_URL=${{ secrets.MIDTRANS_URL }}
+          MIDTRANS_CORE_API_URL=${{ secrets.MIDTRANS_CORE_API_URL }}
+          MIDTRANS_CLIENT_KEY=${{ secrets.MIDTRANS_CLIENT_KEY }}
+          MIDTRANS_SERVER_KEY=${{ secrets.MIDTRANS_SERVER_KEY }}
+          MIDTRANS_IS_PRODUCTION=${{ secrets.MIDTRANS_IS_PRODUCTION }}
+          MIDTRANS_IS_SANITIZED=${{ secrets.MIDTRANS_IS_SANITIZED }}
+          MIDTRANS_IS_3DS=${{ secrets.MIDTRANS_IS_3DS }}
+          EOF
+
+          cat > .env.secret-instructor << 'EOF'
+          APP_URL=https://api-instructor.course.iamra.site
+          MIDTRANS_URL=${{ secrets.MIDTRANS_URL }}
+          MIDTRANS_CORE_API_URL=${{ secrets.MIDTRANS_CORE_API_URL }}
+          MIDTRANS_CREATOR_KEY=${{ secrets.MIDTRANS_CREATOR_KEY }}
+          MIDTRANS_APPROVER_KEY=${{ secrets.MIDTRANS_APPROVER_KEY }}
+          MIDTRANS_CLIENT_KEY=${{ secrets.MIDTRANS_CLIENT_KEY }}
+          MIDTRANS_SERVER_KEY=${{ secrets.MIDTRANS_SERVER_KEY }}
+          MIDTRANS_IS_PRODUCTION=${{ secrets.MIDTRANS_IS_PRODUCTION }}
+          MIDTRANS_IS_SANITIZED=${{ secrets.MIDTRANS_IS_SANITIZED }}
+          MIDTRANS_IS_3DS=${{ secrets.MIDTRANS_IS_3DS }}
+          EOF
+
+          cat > .env.secret-public << 'EOF'
+          APP_URL=https://api-public.course.iamra.site
+          EOF
+
+          cat > .env.secret-forum << 'EOF'
+          APP_URL=https://api-forum.course.iamra.site
+          BROADCAST_CONNECTION=reverb
+          REVERB_APP_ID=${{ secrets.FORUM_REVERB_APP_ID }}
+          REVERB_APP_KEY=${{ secrets.FORUM_REVERB_APP_KEY }}
+          REVERB_APP_SECRET=${{ secrets.FORUM_REVERB_APP_SECRET }}
+          REVERB_HOST=backend-api-forum-reverb
+          REVERB_PORT=8080
+          REVERB_SCHEME=http
+          EOF
+
+      - name: Build and Push Images
+        run: |
+          # Create Nginx Dockerfile
+          cat > Dockerfile.nginx << 'EOF'
+          FROM nginx:1.25-alpine
+
+          RUN apk add --no-cache \
+              certbot \
+              certbot-nginx \
+              openssl \
+              curl \
+              && rm -rf /var/cache/apk/*
+          
+          RUN mkdir -p /var/cache/nginx/static \
+              /var/cache/nginx/api \
+              /var/www/html/forum \
+              /var/www/html/user \
+              /var/www/html/instructor \
+              /var/www/html/student \
+              /var/www/html/public \
+              /var/www/certbot \
+              /etc/letsencrypt \
+              && chown -R nginx:nginx /var/cache/nginx /var/www/html /var/www/certbot /etc/letsencrypt
+          
+          COPY frontend-user/dist /var/www/html/user
+          COPY frontend-instructor/dist /var/www/html/instructor
+          COPY frontend-student/dist /var/www/html/student
+          COPY frontend-public/dist /var/www/html/public
+          COPY frontend-forum/dist /var/www/html/forum
+          
+          RUN chown -R nginx:nginx /var/www/html
+          
+          EXPOSE 80 443
+          
+          CMD ["nginx", "-g", "daemon off;"]
+          EOF
+
+          # Build and push Nginx
+          docker buildx build \
+            --platform linux/amd64 \
+            --file Dockerfile.nginx \
+            --tag ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-nginx:${{ steps.secrets.outputs.build_tag }} \
+            --tag ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-nginx:latest \
+            --push .
+
+          # Build backend services
+          SERVICES=("user" "instructor" "student" "forum" "public")
+
+          for service in "${SERVICES[@]}"; do
+            if [ -f "docker/prod/backend-laravel/${service}/Dockerfile.api-${service}" ]; then
+              echo "Building ${service}..."
+
+              docker buildx build \
+                --platform linux/amd64 \
+                --file docker/prod/backend-laravel/${service}/Dockerfile.api-${service} \
+                --tag ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-${service}:${{ steps.secrets.outputs.build_tag }} \
+                --tag ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-${service}:latest \
+                --push .
+            fi
+          done
+
+          docker buildx build \
+            --platform linux/amd64 \
+            --file docker/prod/backend-laravel/user/Dockerfile.api-user-reverb \
+            --tag ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-user-reverb:${{ steps.secrets.outputs.build_tag }} \
+            --tag ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-user-reverb:latest \
+            --push .
+
+          docker buildx build \
+            --platform linux/amd64 \
+            --file docker/prod/backend-laravel/forum/Dockerfile.api-forum-reverb \
+            --tag ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-forum-reverb:${{ steps.secrets.outputs.build_tag }} \
+            --tag ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-forum-reverb:latest \
+            --push .
+
+      - name: Create Docker Compose for Production
+        env:
+          BUILD_TAG: ${{ steps.secrets.outputs.build_tag }}
+        run: |
+          cat > docker-compose.yml << 'EOF'
+          services:
+            nginx:
+              image: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-nginx:${BUILD_TAG}
+              container_name: nginx
+              ports:
+                - "80:80"
+                - "443:443"
+              depends_on: 
+                - backend-api-user
+                - backend-api-user-reverb
+                - backend-api-public
+                - backend-api-instructor
+                - backend-api-student
+                - backend-api-forum
+                - backend-api-forum-reverb
+              volumes:
+                - ./letsencrypt:/etc/letsencrypt:rw
+                - ./certbot:/var/www/certbot:rw
+                - ./nginx-https.conf:/etc/nginx/nginx.conf:ro
+                - sockets:/var/run/sockets:rw
+                - backend_api_instructor_course_images:/var/www/backend-api-instructor-course-images:ro
+                - backend_api_user_images:/var/www/backend-api-user-images:ro
+              networks:
+                - app-network
+              restart: unless-stopped
+              deploy:
+                resources:
+                  limits:
+                    memory: 30M
+                    cpus: '0.05'
+
+            backend-api-user:
+              image: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-user:${BUILD_TAG}
+              container_name: backend-api-user
+              env_file:
+                - .env.secret-shared
+                - .env.secret-user
+              volumes:
+                - sockets:/var/run/sockets:rw
+                - backend_api_user_images:/app/storage/app/public/user-images
+              networks:
+                - app-network
+              restart: unless-stopped
+              deploy:
+                resources:
+                  limits:
+                    memory: 112M
+                    cpus: '0.15'
+
+            backend-api-user-reverb:
+              image: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-user-reverb:${BUILD_TAG}
+              container_name: backend-api-user-reverb
+              env_file:
+                - .env.secret-shared
+                - .env.secret-user
+              networks:
+                - app-network
+              restart: unless-stopped
+              expose:
+                - "8080"
+              deploy:
+                resources:
+                  limits:
+                    memory: 80M
+                    cpus: '0.1'
+
+            backend-api-public:
+              image: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-public:${BUILD_TAG}
+              container_name: backend-api-public
+              env_file:
+                - .env.secret-shared
+                - .env.secret-public
+              volumes:
+                - sockets:/var/run/sockets:rw
+              networks:
+                - app-network
+              restart: unless-stopped
+              deploy:
+                resources:
+                  limits:
+                    memory: 112M
+                    cpus: '0.1'
+
+            backend-api-student:
+              image: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-student:${BUILD_TAG}
+              container_name: backend-api-student
+              env_file:
+                - .env.secret-shared
+                - .env.secret-student
+              volumes:
+                - sockets:/var/run/sockets:rw
+              networks:
+                - app-network
+              restart: unless-stopped
+              deploy:
+                resources:
+                  limits:
+                    memory: 112M
+                    cpus: '0.1'
+
+            backend-api-instructor:
+              image: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-instructor:${BUILD_TAG}
+              container_name: backend-api-instructor
+              env_file:
+                - .env.secret-shared
+                - .env.secret-instructor
+              volumes:
+                - sockets:/var/run/sockets:rw
+                - backend_api_instructor_course_images:/app/storage/app/public/instructor-course-images
+              networks:
+                - app-network
+              restart: unless-stopped
+              deploy:
+                resources:
+                  limits:
+                    memory: 112M
+                    cpus: '0.1'
+
+            backend-api-forum:
+              image: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-forum:${BUILD_TAG}
+              container_name: backend-api-forum
+              env_file:
+                - .env.secret-shared
+                - .env.secret-forum
+              volumes:
+                - sockets:/var/run/sockets:rw
+              networks:
+                - app-network
+              restart: unless-stopped
+              deploy:
+                resources:
+                  limits:
+                    memory: 112M
+                    cpus: '0.1'
+
+            backend-api-forum-reverb:
+              image: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}-forum-reverb:${BUILD_TAG}
+              container_name: backend-api-forum-reverb
+              env_file:
+                - .env.secret-shared
+                - .env.secret-forum
+              networks:
+                - app-network
+              restart: unless-stopped
+              expose:
+                - "8080"
+              deploy:
+                resources:
+                  limits:
+                    memory: 80M
+                    cpus: '0.1'
+
+          volumes:
+            redis_data:
+            sockets:
+            backend_api_instructor_course_images:
+            backend_api_user_images:
+
+          networks:
+            app-network:
+              driver: bridge
+          EOF
+
+          sed -i "s/\${BUILD_TAG}/$BUILD_TAG/g" docker-compose.yml
+
+      - name: Deploy to EC2
+        env:
+          AWS_EC2_HOST: ${{ secrets.AWS_EC2_HOST }}
+          AWS_EC2_USERNAME: ${{ secrets.AWS_EC2_USERNAME }}
+          AWS_EC2_PRIVATE_KEY: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          IMAGE_PREFIX: ${{ env.IMAGE_PREFIX }}
+        run: |
+          # Setup SSH
+          mkdir -p ~/.ssh
+          echo "$AWS_EC2_PRIVATE_KEY" > ~/.ssh/ec2_key.pem
+          chmod 600 ~/.ssh/ec2_key.pem
+          ssh-keyscan -H $AWS_EC2_HOST >> ~/.ssh/known_hosts
+
+          # Test connection
+          ssh -i ~/.ssh/ec2_key.pem -o ConnectTimeout=10 $AWS_EC2_USERNAME@$AWS_EC2_HOST "echo 'Connection successful'"
+
+          # Upload files
+          echo "Uploading deployment files..."
+          scp -i ~/.ssh/ec2_key.pem -o ConnectTimeout=30 \
+            docker-compose.yml \
+            .env.secret-shared .env.secret-user .env.secret-public .env.secret-student .env.secret-instructor .env.secret-forum \
+            docker/prod/custom-command/deploy.sh \
+            docker/prod/custom-command/setup-ssl.sh \
+            docker/prod/custom-command/renew-ssl.sh \
+            docker/prod/server-entrypoint/nginx-http.conf \
+            docker/prod/server-entrypoint/nginx-https.conf \
+            $AWS_EC2_USERNAME@$AWS_EC2_HOST:~/
+
+          # Determine which nginx config to use
+          NGINX_CONFIG="nginx-http.conf"
+          ssh -i ~/.ssh/ec2_key.pem $AWS_EC2_USERNAME@$AWS_EC2_HOST "
+            if [ -f letsencrypt/live/course.iamra.site/fullchain.pem ]; then
+              echo 'HTTPS' > /tmp/ssl_status
+            else
+              echo 'HTTP' > /tmp/ssl_status
+            fi
+          "
+          
+          SSL_STATUS=$(ssh -i ~/.ssh/ec2_key.pem $AWS_EC2_USERNAME@$AWS_EC2_HOST "cat /tmp/ssl_status")
+          
+          if [ "$SSL_STATUS" = "HTTPS" ]; then
+            NGINX_CONFIG="nginx-https.conf"
+            echo "SSL certificates exist, using HTTPS config"
+          else
+            echo "No SSL certificates, using HTTP config"
+          fi
+
+          # Execute deployment
+          echo "Executing deployment on EC2..."
+          ssh -i ~/.ssh/ec2_key.pem -o ConnectTimeout=30 -o ServerAliveInterval=30 $AWS_EC2_USERNAME@$AWS_EC2_HOST << ENDSSH
+
+          export DOCKER_USERNAME="$DOCKER_USERNAME"
+          export DOCKER_PASSWORD="$DOCKER_PASSWORD"
+          export IMAGE_PREFIX="$IMAGE_PREFIX"
+
+          chmod +x ~/deploy.sh ~/setup-ssl.sh ~/renew-ssl.sh
+          ~/deploy.sh
+
+          # Auto-run SSL setup if certificates don't exist
+          if [ ! -f ~/letsencrypt/live/course.iamra.site/fullchain.pem ]; then
+            echo "Running SSL setup for first time..."
+            ~/setup-ssl.sh || echo "SSL setup failed, continuing with HTTP"
+          else
+            echo "SSL certificates already exist"
+          fi
+
+          ENDSSH
+
+          echo "Deployment completed!"

@@ -1,0 +1,180 @@
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    user: "1000:1000"
+    ports:
+      - "80:80"
+      - "443:8443"
+    depends_on:
+      - backend-api-user
+      - backend-api-user-reverb
+      - backend-api-public
+      - backend-api-instructor
+      - backend-api-student
+      - backend-api-forum
+      - backend-api-forum-reverb
+    tmpfs:
+      - /var/cache/nginx:uid=1000,gid=1000
+      - /var/run:uid=1000,gid=1000
+    volumes:
+      - "./server-entrypoint/nginx-mobile.conf:/etc/nginx/nginx.conf:ro"
+      - shared-sockets:/var/run/sockets:rw
+      - backend_api_instructor_course_images:/var/www/backend-api-instructor-course-images:ro
+      - backend_api_user_images:/var/www/backend-api-user-images:ro
+    networks:
+      - app-network
+    restart: unless-stopped
+    mem_limit: 30M
+    cpus: 0.05
+
+  database-mysql:
+    image: mysql:latest
+    container_name: database-mysql
+    restart: always
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: iamra_course
+    ports:
+      - "3307:3306"
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      retries: 5
+      timeout: 5s
+
+  backend-api-user:
+    build:
+      context: ../../
+      dockerfile: docker/prod/backend-laravel/user/Dockerfile.api-user
+    container_name: backend-api-user
+    env_file:
+      - .env.shared
+      - .env.secret-shared
+      - .env.secret-user
+    volumes:
+      - ../../backend-api-user/domain/Shared/Helpers/ResponseApiHelper.php:/app/domain/Shared/Helpers/ResponseApiHelper.php
+      - shared-sockets:/var/run/sockets:rw
+      - backend_api_user_images:/app/storage/app/public/user-images
+    networks:
+      - app-network
+    restart: unless-stopped
+    mem_limit: 112M
+    cpus: '0.15'
+
+  backend-api-user-reverb:
+    build:
+      context: ../../
+      dockerfile: docker/prod/backend-laravel/user/Dockerfile.api-user-reverb
+    container_name: backend-api-user-reverb
+    env_file:
+      - .env.shared
+      - .env.secret-shared
+      - .env.secret-user
+    networks:
+      - app-network
+    restart: unless-stopped
+    expose:
+      - "8080"
+    mem_limit: 80M
+    cpus: '0.1'
+
+  backend-api-public:
+    build:
+      context: ../../
+      dockerfile: docker/prod/backend-laravel/public/Dockerfile.api-public
+    container_name: backend-api-public
+    env_file:
+      - .env.shared
+      - .env.secret-shared
+      - .env.secret-public
+    volumes:
+      - shared-sockets:/var/run/sockets:rw
+    networks:
+      - app-network
+    restart: unless-stopped
+    mem_limit: 112M
+    cpus: '0.1'
+
+  backend-api-student:
+    build:
+      context: ../../
+      dockerfile: docker/prod/backend-laravel/student/Dockerfile.api-student
+    container_name: backend-api-student
+    env_file:
+      - .env.shared
+      - .env.secret-shared
+      - .env.secret-student
+    volumes:
+      - shared-sockets:/var/run/sockets:rw
+    networks:
+      - app-network
+    restart: unless-stopped
+    mem_limit: 112M
+    cpus: '0.1'
+
+  backend-api-instructor:
+    build:
+      context: ../../
+      dockerfile: docker/prod/backend-laravel/instructor/Dockerfile.api-instructor
+    container_name: backend-api-instructor
+    env_file:
+      - .env.shared
+      - .env.secret-shared
+      - .env.secret-instructor
+    volumes:
+      - shared-sockets:/var/run/sockets:rw
+      - backend_api_instructor_course_images:/app/storage/app/public/instructor-course-images
+    networks:
+      - app-network
+    restart: unless-stopped
+    mem_limit: 112M
+    cpus: '0.1'
+
+  backend-api-forum:
+    build:
+      context: ../../
+      dockerfile: docker/prod/backend-laravel/forum/Dockerfile.api-forum
+    container_name: backend-api-forum
+    env_file:
+      - .env.shared
+      - .env.secret-shared
+      - .env.secret-forum
+    volumes:
+      - shared-sockets:/var/run/sockets:rw
+      - ../../backend-api-forum/app:/app/app
+    networks:
+      - app-network
+    restart: unless-stopped
+    mem_limit: 112M
+    cpus: '0.1'
+
+  backend-api-forum-reverb:
+    build:
+      context: ../../
+      dockerfile: docker/prod/backend-laravel/forum/Dockerfile.api-forum-reverb
+    container_name: backend-api-forum-reverb
+    env_file:
+      - .env.shared
+      - .env.secret-shared
+      - .env.secret-forum
+    networks:
+      - app-network
+    restart: unless-stopped
+    expose:
+      - "8080"
+    mem_limit: 80M
+    cpus: '0.1'
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  shared-sockets:
+  backend_api_instructor_course_images:
+  backend_api_user_images:

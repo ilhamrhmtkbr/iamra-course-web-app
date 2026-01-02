@@ -1,0 +1,10 @@
+{
+  "forum_warning_no_courses_student": "You have not purchased or paid for the ",
+  "forum_warning_no_courses_instructor": "You don't have one yet ",
+  "forum_warning_no_choice": "You have not selected a course for discussion.",
+  "alert": "Alert",
+  "courses": "Courses",
+  "forum_warning_alert": "There are no incoming or outgoing messages yet. To compose a message, please click or select one of the course groups.",
+  "today": "Today",
+  "yesterday": "Yesterday"
+}

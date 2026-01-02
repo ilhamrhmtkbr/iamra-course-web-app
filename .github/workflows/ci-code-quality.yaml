@@ -1,0 +1,28 @@
+name: Code Quality
+
+on:
+  workflow_call:
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Code Quality Checks
+        run: |
+          for service in user student instructor forum public; do
+            echo "Checking backend-api-$service..."
+            find backend-api-$service -name "*.php" -exec php -l {} \; > /dev/null
+            echo "✅ backend-api-$service valid"
+          done
+
+      - name: Composer Validate
+        run: |
+          for service in user student instructor forum public; do
+            cd backend-api-$service
+            composer validate --strict
+            cd ..
+            echo "✅ backend-api-$service valid"
+          done

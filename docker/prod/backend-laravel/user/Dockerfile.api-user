@@ -1,0 +1,126 @@
+FROM php:8.2-cli
+
+WORKDIR /app
+
+# Install bash dan dependencies
+RUN apt-get update && apt-get install -y \
+    bash \
+    git curl \
+    libpng-dev libjpeg-dev libfreetype6-dev libwebp-dev \
+    libmagickwand-dev \
+    zip unzip \
+    libssl-dev libcurl4-openssl-dev \
+    libicu-dev \
+    libzip-dev \
+    libonig-dev \
+    libxml2-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-install pdo_mysql mbstring bcmath gd zip opcache pcntl sockets \
+    && pecl install imagick redis \
+    && docker-php-ext-enable imagick redis \
+    && apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+RUN if ! id -u ilhamrhmtkbr > /dev/null 2>&1; then \
+        groupadd -g 1000 ilhamrhmtkbr && \
+        useradd -u 1000 -g ilhamrhmtkbr -m -s /bin/bash ilhamrhmtkbr; \
+    fi
+
+COPY backend-api-user/ /app/
+
+RUN mkdir -p \
+   /var/run/sockets \
+   /tmp \
+   /app/storage/app/public \
+   /app/storage/framework/views \
+   /app/storage/framework/cache \
+   /app/storage/framework/sessions \
+   /app/storage/logs \
+   /app/bootstrap/cache
+
+RUN chown -R ilhamrhmtkbr:ilhamrhmtkbr /app /var/log /var/run/sockets && \
+    chmod -R 755 /app && \
+    chmod -R 775 /app/storage /app/bootstrap/cache /var/run/sockets
+
+USER ilhamrhmtkbr
+
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress
+
+RUN curl -L https://github.com/roadrunner-server/roadrunner/releases/download/v2024.2.0/roadrunner-2024.2.0-linux-amd64.tar.gz -o /tmp/rr.tar.gz \
+    && tar -xzf /tmp/rr.tar.gz -C /tmp \
+    && mv /tmp/roadrunner-2024.2.0-linux-amd64/rr /app/rr \
+    && rm -rf /tmp/rr.tar.gz /tmp/roadrunner-2024.2.0-linux-amd64 \
+    && chmod +x /app/rr
+
+USER root
+
+COPY docker/prod/backend-laravel/_shared/.env.shared /app/.env
+COPY docker/prod/backend-laravel/_shared/php-custom-api-shared.ini /usr/local/etc/php/conf.d/99-custom.ini
+
+RUN cat > /entrypoint.sh << 'EOF'
+#!/bin/bash
+set -e
+
+echo "" >> /app/.env
+echo "# Docker env_file variables" >> /app/.env
+
+env | grep -v '^PATH=' | grep -v '^PWD=' | grep -v '^SHLVL=' | \
+     grep -v '^HOME=' | grep -v '^HOSTNAME=' | grep -v '^_=' | \
+     grep -v '^TERM=' | grep -v '^OLDPWD=' | \
+     grep -E '^[A-Z_][A-Z0-9_]*=' | \
+while IFS='=' read -r key value; do
+    # Escape double quotes in value and wrap in double quotes
+    escaped_value=$(echo "$value" | sed 's/"/\\"/g')
+
+    if grep -q "^${key}=" /app/.env 2>/dev/null; then
+        # Use # as delimiter to avoid issues with / in base64
+        sed -i "s#^${key}=.*#${key}=\"${escaped_value}\"#" /app/.env
+    else
+        echo "${key}=\"${escaped_value}\"" >> /app/.env
+    fi
+done
+
+mkdir -p /var/run/sockets
+chmod 777 /var/run/sockets
+umask 000
+
+su - ilhamrhmtkbr -s /bin/bash -c "cd /app && php artisan optimize:clear 2>/dev/null || true"
+sleep 2
+su - ilhamrhmtkbr -s /bin/bash -c "cd /app && php artisan optimize 2>/dev/null || true"
+
+su - ilhamrhmtkbr -s /bin/bash -c "cd /app && umask 000 && /app/rr serve -c /app/.rr.yaml" &
+RR_PID=$!
+
+COUNTER=0
+while [ $COUNTER -lt 30 ]; do
+    if [ -S /var/run/sockets/backend-api-user.sock ]; then
+        chmod 666 /var/run/sockets/backend-api-user.sock
+        break
+    fi
+
+    COUNTER=$((COUNTER + 1))
+
+    if [ $COUNTER -eq 30 ]; then
+        echo "ERROR: Socket not created after 30 seconds!"
+        kill $RR_PID 2>/dev/null || true
+        exit 1
+    fi
+
+    sleep 1
+done
+
+wait $RR_PID
+exit $?
+EOF
+
+RUN chmod +x /entrypoint.sh
+
+RUN chmod +x /app/rr && \
+    chown ilhamrhmtkbr:ilhamrhmtkbr /app/rr /app/.rr.yaml /app/worker.php
+
+LABEL maintainer="ilhamrhmtkbr" \
+      version="1.0" \
+      description="Laravel + RoadRunner Unix Socket - User API (PROD)"
+
+CMD ["/entrypoint.sh"]

@@ -1,0 +1,4 @@
+sudo docker compose \
+run --rm set-k6 run \
+--out experimental-prometheus-rw=http://set-prometheus:9090/api/v1/write \
+/k6-scripts/test/register.js

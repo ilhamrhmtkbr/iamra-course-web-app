@@ -1,0 +1,133 @@
+{
+  "instructor": "Instructor",
+  "student": "Student",
+  "visitor": "Visitor",
+
+  "courses": "Courses",
+  "certificates": "Certificates",
+  "about" : "About",
+  "profile": "Profile",
+  "setting": "Setting",
+
+  "search" : "Search",
+  "course": "Course",
+  "description": "Description",
+  "price": "Price",
+  "level": "Level",
+  "status": "Status",
+  "notes": "Notes",
+  "visibility": "Visibility",
+  "requirements": "Requirements",
+  "editor": "Editor",
+  "created_at": "Created at",
+  "updated_at": "Updated at",
+  "detail": "Detail",
+
+  "now": "Now",
+  "see_sections": "See Sections",
+  "download": "Download",
+
+  "data_not_found" : "Data Not Found",
+  "explore_now" : "Explore Now",
+
+  "course_title" : "Course Title",
+  "courses_likes": "Courses Likes",
+  "welcome": "Welcome",
+
+  "about_download_the_mobile_version_of_the_android_application" : "Download the mobile version of the android application",
+  "about_great_subtitle": "The best platform to learn coding flexibly!",
+  "about_great_desc": "Improve your programming skills with experienced instructors and an interactive community.",
+  "about_great_button": "Let’s start your learning journey now!",
+  "about_info_student_1_title": "Choose & Buy Courses According to Interests",
+  "about_info_student_1_desc": "Explore the various courses available on OlCourse and find the one that best suits your needs. From programming to the latest technologies, it's all here!",
+  "about_info_student_2_title": "Access Material Anytime, Anywhere",
+  "about_info_student_2_desc": "After purchasing a course, you can immediately access all materials without any time limits. Learn flexibly according to your rhythm and busyness!",
+  "about_info_student_3_title": "Follow Lessons & Do Assignments",
+  "about_info_student_3_desc": "Each course is designed with systematic and easy-to-understand materials. Follow the learning modules, to deepen your understanding.",
+  "about_info_student_4_title": "Discussion & Ask the Instructor",
+  "about_info_student_4_desc": "Don't hesitate to ask questions! Join the discussion forum, ask questions to the instructors, and learn with the community.",
+  "about_info_student_5_title": "Complete Course & Get Certificate",
+  "about_info_student_5_desc": "After completing all the materials, you will receive an official certificate as proof of expertise that can be used for your career or portfolio!",
+  "about_info_instructor_1_title": "Create & Upload Your Own Courses",
+  "about_info_instructor_1_desc": "As an Instructor, you can share your knowledge and experience by creating quality courses. Upload materials in the form of videos, documents, and interactive assignments.",
+  "about_info_instructor_2_title": "Manage Content & Update Content",
+  "about_info_instructor_2_desc": "Customize and update course materials at any time to stay relevant. Ensure students get the best learning with information that is always up-to-date!",
+  "about_info_instructor_3_title": "Help Students with Discussion & Q&A",
+  "about_info_instructor_3_desc": "Interact with Students through discussion forums or Q&A sessions. Help them understand the material more deeply and create an active learning community!",
+  "about_info_instructor_4_title": "Build Reputation & Reach More Students",
+  "about_info_instructor_4_desc": "The more quality courses you create, the more students will be interested in learning from you. Build a reputation as the best instructor in your field!",
+  "about_info_instructor_5_title": "Earn Money from Your Courses",
+  "about_info_instructor_5_desc": "Every Student who purchases your course will contribute to your income. The more Students who learn, the more you earn!",
+
+  "about_faq_student_1_question": "Is this platform suitable for beginners?",
+  "about_faq_student_1_subtitle": "Yes, our platform is designed for all levels including beginners.",
+  "about_faq_student_1_content": "Yes! We offer courses from basic to advanced, with easy-to-follow explanations and real-world projects to help you learn coding step-by-step.",
+
+  "about_faq_student_2_question": "What programming languages are available?",
+  "about_faq_student_2_subtitle": "We offer various languages like JavaScript, Python, and more.",
+  "about_faq_student_2_content": "We provide courses in JavaScript, Python, HTML/CSS, React, Node.js, and many others. We also regularly add new content based on industry needs.",
+
+  "about_faq_student_3_question": "Do I get a certificate after completing a course?",
+  "about_faq_student_3_subtitle": "Yes, digital certificates are available for all courses.",
+  "about_faq_student_3_content": "Upon completing a course, you’ll receive a digital certificate which you can use to boost your CV or LinkedIn profile.",
+
+  "about_faq_student_4_question": "Is course access lifetime?",
+  "about_faq_student_4_subtitle": "Yes, course access has no expiration.",
+  "about_faq_student_4_content": "Once enrolled, you can access the course anytime with no time limit. Learn at your own pace!",
+
+  "about_faq_student_5_question": "How do I join a class?",
+  "about_faq_student_5_subtitle": "Just sign up and choose the class you want.",
+  "about_faq_student_5_content": "You just need to create a free account, then you can immediately start free classes or pay for premium ones.",
+
+  "about_faq_student_6_question": "Are there mentors or discussion forums?",
+  "about_faq_student_6_subtitle": "We provide community and mentoring support.",
+  "about_faq_student_6_content": "Yes, you can interact with peers in forums or community groups, and some courses include access to mentors for guidance.",
+
+  "about_faq_student_7_question": "Can I learn using my phone?",
+  "about_faq_student_7_subtitle": "Yes, our platform supports mobile devices.",
+  "about_faq_student_7_content": "Absolutely! Our website is accessible from smartphones, tablets, or desktops. Learn anytime, anywhere.",
+
+  "about_faq_instructor_1_question": "How do I become an instructor on this platform?",
+  "about_faq_instructor_1_subtitle": "You just need to sign up and submit a course proposal.",
+  "about_faq_instructor_1_content": "To become an instructor, sign up and complete the course submission form. Our team will review your content and provide feedback or approval.",
+
+  "about_faq_instructor_2_question": "Do I need prior teaching experience?",
+  "about_faq_instructor_2_subtitle": "Not required, but it's a plus.",
+  "about_faq_instructor_2_content": "We welcome instructors from all backgrounds. As long as you can deliver clear and structured content, you can teach even without prior experience.",
+
+  "about_faq_instructor_3_question": "What kind of topics can I teach?",
+  "about_faq_instructor_3_subtitle": "Any relevant coding, tech, or tool-related topic.",
+  "about_faq_instructor_3_content": "You can teach topics like programming, web development, data science, AI/ML, DevOps, UI/UX, and more. We’re open to any relevant and in-demand content.",
+
+  "about_faq_instructor_4_question": "Will I get paid?",
+  "about_faq_instructor_4_subtitle": "Yes, instructors earn revenue share from course sales.",
+  "about_faq_instructor_4_content": "Instructors earn commission from every course sale. Revenue share and payout details will be explained during onboarding.",
+
+  "about_faq_instructor_5_question": "What platform should I use to record my course?",
+  "about_faq_instructor_5_subtitle": "You can use OBS, Screenity, Camtasia, etc.",
+  "about_faq_instructor_5_content": "You’re free to use any tool you're comfortable with, as long as the video and audio quality are clear and professional.",
+
+  "about_faq_instructor_6_question": "Can I update my course after it's published?",
+  "about_faq_instructor_6_subtitle": "Yes, you can update content anytime.",
+  "about_faq_instructor_6_content": "You’re allowed to update or add materials anytime. We encourage instructors to keep content fresh and up-to-date.",
+
+  "about_faq_instructor_7_question": "Can I host live sessions or Q&As?",
+  "about_faq_instructor_7_subtitle": "Yes, you can schedule live sessions.",
+  "about_faq_instructor_7_content": "Instructors are welcome to host live or Q&A sessions to boost engagement and help clarify difficult topics.",
+
+  "course_instructor_no_resume": "Instructor has not uploaded resume",
+  "course_instructor_no_summary": "Instructor has not added a summary yet",
+  "course_instructor_no_social": "Instructor has not linked any social media links",
+  "course_like_must_login" : "You're not logged in, log in now?",
+  "course_like_must_login_as_student" : "You are not student",
+  "course_add_to_cart": "Add to cart",
+
+  "certificate_stepper_1": "Complete the course",
+  "certificate_stepper_2": "Get a certificate",
+  "certificate_verify_not_found": "Certificate not found",
+  "certificate_verify": "Certificate Verify",
+  "certificate_id": "Certificate Id",
+  "certificate_card_text_1": "Certificate of Completion",
+  "certificate_card_text_2": "This is to certify that",
+  "certificate_card_text_3": "has successfully completed the course"
+}

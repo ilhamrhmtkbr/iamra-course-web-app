@@ -1,0 +1,224 @@
+**/java
+
+#######################
+# Laravel Backend APIs
+#######################
+
+# Environment files - WAJIB IGNORE (kalo ada credential)
+**/.env
+**/.env.*
+!**/.env.example
+**/backend-api-*/.env.local
+**/backend-api-*/.env.production
+**/backend-api-*/.env.staging
+**/docker/dev/frontend-react/.env.shared
+**/docker/dev/backend-laravel/_shared/.env.shared
+!**/docker/prod/frontend-react/.env.shared
+!**/docker/prod/backend-laravel/_shared/.env.shared
+
+# Laravel Dependencies & Cache
+**/backend-api-*/vendor/
+**/backend-api-*/node_modules/
+**/backend-api-*/storage/framework/cache/*
+**/backend-api-*/storage/framework/sessions/*
+**/backend-api-*/storage/framework/views/*
+**/backend-api-*/storage/logs/*
+**/backend-api-*/bootstrap/cache/*
+**/backend-api-*/rr
+**/backend-api-*/rr.exe
+
+# Laravel Generated Files
+**/backend-api-*/storage/oauth-private.key
+**/backend-api-*/storage/oauth-public.key
+**/backend-api-*/.phpunit.result.cache
+
+# DLL files (kayaknya custom Anda)
+**/dll/
+
+#######################
+# React Frontend Apps
+#######################
+
+# Dependencies
+**/frontend-*/node_modules/
+**/frontend-*/npm-debug.log*
+**/frontend-*/yarn-debug.log*
+**/frontend-*/yarn-error.log*
+
+# Production builds
+**/frontend-*/build/
+**/frontend-*/dist/
+
+# Environment files
+**/frontend-*/.env
+**/frontend-*/.env.local
+**/frontend-*/.env.development.local
+**/frontend-*/.env.test.local
+**/frontend-*/.env.production.local
+
+# Logs
+**/frontend-*/logs/
+**/frontend-*/*.log
+
+#######################
+# Docker & Development
+#######################
+
+# Docker volumes & data
+**/docker/volumes/
+**/docker/data/
+**/.docker/
+
+# Development environment files
+**/docker/dev/backend-laravel/_shared/.env.shared
+
+# Docker override files (personal configurations)
+**/docker-compose.override.yml
+**/docker-compose.local.yml
+
+#######################
+# IDE & OS Files
+#######################
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# PhpStorm
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-*
+
+# Vim
+*.swp
+*.swo
+*~
+
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Linux
+*~
+.fuse_hidden*
+.Trash-*
+.nfs*
+
+#######################
+# Monitoring & Tools
+#######################
+
+# Grafana data
+**/set-grafana/data/
+**/set-grafana/logs/
+
+# Prometheus data
+**/set-prometheus/data/
+
+# K6 results
+**/set-k6/results/
+**/set-k6/*.json
+
+#######################
+# Certificates & Keys
+#######################
+
+# SSL Certificates
+*.pem
+*.crt
+*.key
+*.p12
+*.pfx
+*.jks
+
+# SSH Keys
+id_rsa*
+id_ed25519*
+known_hosts
+
+#######################
+# Logs & Temporary Files
+#######################
+
+# General logs
+*.log
+logs/
+log/
+
+# Temporary files
+*.tmp
+*.temp
+*.cache
+.cache/
+.tmp/
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+#######################
+# Specific Project Files
+#######################
+
+# Database dumps
+*.sql
+*.dump
+
+# Uploads (if any)
+**/uploads/
+**/public/uploads/
+
+# Generated documentation
+**/docs/generated/
+
+#######################
+# CI/CD & Deployment
+#######################
+
+# AWS credentials (jangan sampai ke-commit!)
+.aws/
+aws-credentials.json
+*.pem
+
+# GitHub Actions cache
+.github/actions-runner/
+
+# Terraform (jika nanti pakai)
+*.tfstate
+*.tfstate.*
+.terraform/
+
+#######################
+# Security & Sensitive
+#######################
+
+# API Keys & Secrets
+*api-keys*
+*secrets*
+*credentials*
+*.secret
+
+# JWT Keys
+jwt-*.key
+
+# Database credentials
+*database.yml
+*database.json

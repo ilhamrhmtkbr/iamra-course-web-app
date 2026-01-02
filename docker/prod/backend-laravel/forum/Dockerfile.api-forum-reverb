@@ -1,0 +1,88 @@
+FROM php:8.2-cli
+
+WORKDIR /app
+
+# Install dependencies dan PHP extensions
+RUN apt-get update && apt-get install -y \
+    gosu \
+    zip unzip \
+    libzip-dev \
+    && docker-php-ext-install pdo_mysql bcmath zip pcntl sockets \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Create user
+RUN if ! id -u ilhamrhmtkbr > /dev/null 2>&1; then \
+        groupadd -g 1000 ilhamrhmtkbr && \
+        useradd -u 1000 -g ilhamrhmtkbr -m ilhamrhmtkbr; \
+    fi
+
+# Copy source code
+COPY backend-api-forum/ /app/
+
+# Create necessary directories
+RUN mkdir -p \
+   /var/log \
+   /app/storage/app/public \
+   /app/storage/framework/views \
+   /app/storage/framework/cache \
+   /app/storage/framework/sessions \
+   /app/storage/logs \
+   /app/bootstrap/cache
+
+# Set permissions sebelum install composer
+RUN chown -R ilhamrhmtkbr:ilhamrhmtkbr /app /var/log && \
+    chmod -R 755 /app && \
+    chmod -R 775 /app/storage /app/bootstrap/cache
+
+# Switch to non-root user untuk composer install
+USER ilhamrhmtkbr
+
+# Install dependencies
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress --ignore-platform-req=ext-mongodb
+
+# Switch back to root untuk copy config
+USER root
+
+COPY docker/prod/backend-laravel/_shared/.env.shared /app/.env
+COPY docker/prod/backend-laravel/_shared/php-custom-api-shared.ini /usr/local/etc/php/conf.d/99-custom.ini
+
+RUN cat > /entrypoint.sh << 'EOF'
+#!/bin/bash
+set -e
+
+echo "" >> /app/.env
+echo "# Docker env_file variables" >> /app/.env
+
+env | grep -v '^PATH=' | grep -v '^PWD=' | grep -v '^SHLVL=' | \
+    grep -v '^HOME=' | grep -v '^HOSTNAME=' | grep -v '^_=' | \
+    grep -v '^TERM=' | grep -v '^OLDPWD=' | \
+    grep -E '^[A-Z_][A-Z0-9_]*=' | \
+while IFS='=' read -r key value; do
+    escaped_value=$(echo "$value" | sed 's/"/\\"/g')
+
+    if grep -q "^${key}=" /app/.env 2>/dev/null; then
+        sed -i "s#^${key}=.*#${key}=\"${escaped_value}\"#" /app/.env
+    else
+        echo "${key}=\"${escaped_value}\"" >> /app/.env
+    fi
+done
+
+# Clear dan optimize cache
+su - ilhamrhmtkbr -s /bin/bash -c "cd /app && php artisan optimize:clear"
+su - ilhamrhmtkbr -s /bin/bash -c "cd /app && php artisan config:cache"
+
+exec gosu ilhamrhmtkbr php artisan reverb:start --host=0.0.0.0
+EOF
+
+RUN chmod +x /entrypoint.sh
+
+LABEL maintainer="ilhamrhmtkbr" \
+      version="1.0" \
+      description="Laravel + RoadRunner Unix Socket - User API REVERB (PROD)"
+
+CMD ["/entrypoint.sh"]

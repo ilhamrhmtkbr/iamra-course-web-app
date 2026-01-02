@@ -1,0 +1,126 @@
+{
+  "instructor": "Instructor",
+  "student": "Student",
+
+  "username": "Username",
+  "full_name": "Full Name",
+  "email": "Email",
+  "role": "Role",
+  "address": "Address",
+  "since": "Since",
+  "dob": "Date of Birth",
+  "category": "Category",
+  "download": "Download",
+  "summary": "Summary",
+
+  "profile": "profile",
+  "courses": "courses",
+  "questions": "questions",
+  "earnings": "earnings",
+  "reviews": "reviews",
+  "setting": "setting",
+  "forum": "forum",
+  "logout": "logout",
+  "socials": "socials",
+
+  "answer": "Answer",
+  "question": "Question",
+  "review": "Review",
+  "rating": "Rating",
+
+  "detail": "Detail",
+
+  "course": "Course",
+  "description": "Description",
+  "price": "Price",
+  "level": "Level",
+  "status": "Status",
+  "notes": "Notes",
+  "visibility": "Visibility",
+  "requirements": "Requirements",
+  "editor": "Editor",
+  "created_at": "Created at",
+  "updated_at": "Updated at",
+  "image": "Image",
+
+  "course_title" : "Course Title",
+  "courses_likes": "Courses Likes",
+
+  "coupons": "Coupons",
+  "max_redemptions": "Max Redemptions",
+  "expiry_date": "Expiry Date",
+
+  "success_copy": "The text was copied successfully",
+
+  "you_havent_added_data_yet": "You haven't added data yet",
+  "data_not_found": "The data you are looking for is not found",
+
+  "add": "Add",
+  "see": "See",
+  "edit": "Edit",
+  "remove": "Remove",
+  "cancel": "cancel",
+  "update": "Update",
+  "delete": "Delete",
+  "example": "Example",
+
+  "action": "Action",
+
+  "url_link": "Url Link",
+  "display_name": "Display Name",
+
+  "title": "Title",
+  "order_in_course": "Order In Course",
+  "order_in_section": "Order In Section",
+
+  "sections": "Sections",
+  "lessons": "Lessons",
+
+  "my_courses": "My Courses",
+  "my_answers": "My Answers",
+  "my_earnings": "My Earnings",
+  "my_reviews": "My Reviews",
+  "my_coupons": "My Coupons",
+
+  "alias_name": "Alias Name",
+  "bank": "Bank",
+  "account": "Account",
+  "discount": "Discount",
+
+  "search": "Search",
+
+  "inst_earnings_button": "Withdraw Funds",
+  "inst_earnings_no_data": "You have no income yet",
+  "inst_account_explanation_1": "Enter your bank account number without the code in front of it.",
+  "inst_account_explanation_2": "Please click on the input below to see the list of available banks.",
+  "inst_account_explanation_3": "Correct example: ilhambca7",
+  "inst_account_button": "Cash out your earnings now",
+  "inst_coupons_form_id": "To find out the course ID, please go to the course page and click details.",
+  "inst_coupons_form_discount": "Discount range between 1-99",
+  "inst_coupons_form_max_redemptions": "Max redemptions range between 1-100",
+  "inst_coupons_form_expiry_date": "Expiration date can be selected 2 days later",
+  "inst_coupons_warning": "If you would like to add a coupon, please click on the course details page and select the 'add coupon' button.",
+  "inst_socials_explanation_1": "Example: https://instagram.com/ilhamrhmtkbr",
+  "inst_answers_no_data": "There have not been any questions from students to you yet",
+  "inst_answers_warning": "You have not answered any questions from students",
+  "inst_reviews_no_data": "There are no reviews from students yet",
+  "certificate_verify" : "Certificate Verify",
+
+  "app_router_role_permission" : "You have not registered a role or your role is not suitable, please adjust your profile now.",
+
+  "validation": {
+    "required": "{{attribute}} is required.",
+    "number": "{{attribute}} columns must be numbers",
+    "min": "{{attribute}} must be at least {{min}} characters.",
+    "max": "{{attribute}} must be at most {{max}} characters.",
+    "no_profanity_sentence": "This sentence contains profanity : \"{{sentence}}\"",
+    "image_format": "The image must be a valid base64 image (jpeg, png, jpg, gif, svg, or webp).",
+    "max_image_size": "The image must be less than {{maxMB}}MB in size.",
+    "date": "{{attribute}} must be a valid date.",
+    "date-min": "At least the dates don't match",
+    "email": "{{attribute}} must be a valid email address.",
+    "max_file": "Maximum file size {{max}}.",
+    "invalid_file_type": "File type not supported.",
+    "enum": "Please select according to the following options : {{enum}}"
+  }
+}

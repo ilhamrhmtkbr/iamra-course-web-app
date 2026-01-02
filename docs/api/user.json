@@ -1,0 +1,766 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Api User",
+    "description": "Sebuah backend api yang dirancang untuk personalisasi user",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Ilham Rahmat Akbar",
+      "email": "ilhamrhmtkbr@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "description": "RESTful API Server",
+      "url": "{environment}",
+      "variables": {
+        "environment": {
+          "description": "Server Environtment",
+          "default": "https://unique-id.ngrok-free.app/user-api/v1",
+          "enum": [
+            "https://unique-id.ngrok-free.app/user-api/v1",
+            "http://localhost:8000/user-api/v1",
+            "http://user-api.course.iamra.site",
+            "https://user-api.course.iamra.site"
+          ]
+        }
+      }
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "CookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "access_token"
+      }
+    },
+    "parameters": {
+      "AcceptLanguage": {
+        "name": "Accept-Language",
+        "in": "header",
+        "description": "Bahasa Yang di Gunakan",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "example": "id"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "summary": "Post | User Login",
+        "description": "Entrypoint untuk pengguna dalam memanfaatkan fitur fitur aplikasi",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Authentication token cookie",
+                "schema": {
+                  "type": "string",
+                  "example": "access_token=abc123; HttpOnly; Path=.iamra.site; Max-Age=3600"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil masuk"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "username": "student",
+                  "password": "Ilham25!",
+                  "captcha": "example"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/auth/login-with-google": {
+      "post": {
+        "summary": "Post | User Login With Google",
+        "description": "Login menggunakan akun goggle, intinya di frontend hanya mendapatkan email dari goggle dan sistem keamanan tetap di proses di backend jwt",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Authentication token cookie",
+                "schema": {
+                  "type": "string",
+                  "example": "access_token=abc123; HttpOnly; Path=.iamra.site; Max-Age=3600"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil masuk"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "email": "student@gmail.com",
+                  "full_name": "Student",
+                  "captcha": "example"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "summary": "Post | User Register",
+        "description": "Daftar dilakukan bagi yang belum mempunyai akun",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Authentication token cookie",
+                "schema": {
+                  "type": "string",
+                  "example": "access_token=abc123; HttpOnly; Path=.iamra.site; Max-Age=3600"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil mendaftar"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "first_name": "Ilham",
+                  "middle_name": "Rahmat",
+                  "last_name": "Akbar",
+                  "username": "ilhamrhmtkbr",
+                  "password": "Ilham25!",
+                  "password_confirmation": "Ilham25!",
+                  "captcha": "example"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "summary": "Get | Member Get Data Profile",
+        "description": "Mendapatkan data user yang sedang login",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Get data successfully",
+                  "data": {
+                    "username": "ilhamrhmtkbr",
+                    "full_name": "Ilham Rahmat Akbar",
+                    "email": "ilhamrhmtkbr@gmail.com",
+                    "email_verified_at": "2025-03-25 00:00:00",
+                    "image": "ilham.jpg",
+                    "role": "instructor",
+                    "dob": "2025-03-25",
+                    "address": "Senen, Jakarta Pusat",
+                    "created_at": "29-07-2025 12:03 pm",
+                    "updated_at": "29-07-2025 12:03 pm",
+                    "resume": null,
+                    "summary": null
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "summary": "Get | User Logout ",
+        "description": "Keluar dari sesi yang sedang berlangsung",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil keluar"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/member/student": {
+      "post": {
+        "summary": "Post | Member Register As Student",
+        "description": "Lanjutan dari kelengkapan dalam proses mendaftar sebagai role student sepenuhnya",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Authentication token cookie",
+                "schema": {
+                  "type": "string",
+                  "example": "access_token=abc123; HttpOnly; Path=.iamra.site; Max-Age=3600"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil mendaftar : student"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "role": "student",
+                  "category": "learner",
+                  "description": "description description"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/member/instructor": {
+      "post": {
+        "summary": "Post | Member Register As Instructor",
+        "description": "Lanjutan dari kelengkapan dalam proses mendaftar sebagai role instructor sepenuhnya",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Authentication token cookie",
+                "schema": {
+                  "type": "string",
+                  "example": "access_token=abc123; HttpOnly; Path=.iamra.site; Max-Age=3600"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil mendaftar : instructor",
+                  "data": {
+                    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL3VzZXIvaW5zdHJ1Y3RvciIsImlhdCI6MTc0MTUzNjQxMiwiZXhwIjoxNzQxNTQwMDEyLCJuYmYiOjE3NDE1MzY0MTIsImp0aSI6IkE1ZHMxak5ZQjEyQ05HVDciLCJzdWIiOiJpbGhhbXJobXRrYnIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3IiwiZnVsbF9uYW1lIjoiSWxoYW0gUmFobWF0IEFrYmFyIiwiZW1haWwiOiJpbGhhbXJhaG1hdDY1MkBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZF9hdCI6bnVsbCwiaW1hZ2UiOm51bGwsInJvbGUiOiJpbnN0cnVjdG9yIiwiZG9iIjpudWxsLCJhZGRyZXNzIjpudWxsLCJzdGF0dXMiOiJhY3RpdmUiLCJyZXN1bWUiOiJ1c2VyLXJlc3VtZS9pbGhhbXJobXRrYnIucGRmIiwic3VtbWFyeSI6InN1bW1hcnkgc3VtbWFyeSBzdW1tYXJ5In0.4SsdCL7a3q3DzGJTNnToRQ7UL4JsMxN-USMekaa0akc",
+                    "token_type": "bearer",
+                    "expires_in": 3600
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "role": {
+                    "type": "string",
+                    "default": "instructor"
+                  },
+                  "resume": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": ""
+                  },
+                  "description": {
+                    "type": "string",
+                    "default": "description description description"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/member/email": {
+      "post": {
+        "summary": "Post | Member Set Email",
+        "description": "Mengirimkan link email untuk verifikasi",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Authentication token cookie",
+                "schema": {
+                  "type": "string",
+                  "example": "access_token=abc123; HttpOnly; Path=.iamra.site; Max-Age=3600"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Email berhasil diperbarui : ilhamrahmat652@gmail.com"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "email": "ilhamrahmat652@gmail.com"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/member/authentication": {
+      "patch": {
+        "summary": "Patch | Member Authentication",
+        "description": "Mengubah username atau password, dengan syarat harus ingat password yang lama",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Authentication token cookie",
+                "schema": {
+                  "type": "string",
+                  "example": "access_token=abc123; HttpOnly; Path=.iamra.site; Max-Age=3600"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Autentikasi berhasil diubah : ilhamrhmtkbr"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "username": "ilhamrhmtkbr",
+                  "new_password": "Ilham25!Updata",
+                  "old_password": " Ilham25!"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/member/additional-info": {
+      "patch": {
+        "summary": "Patch | Member Additional Info",
+        "description": "Yang dimaksud, seperti menambahkan gambar, alamat, dan tanggal lahir",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Authentication token cookie",
+                "schema": {
+                  "type": "string",
+                  "example": "access_token=abc123; HttpOnly; Path=.iamra.site; Max-Age=3600"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Informasi tambahan berhasil diubah : Ilham"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "first_name": "Ilham",
+                  "middle_name": "Rahmat",
+                  "last_name": "Akbar",
+                  "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAApgAAAKYB3X3/OAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAANCSURBVEiJtZZPbBtFFMZ/M7ubXdtdb1xSFyeilBapySVU8h8OoFaooFSqiihIVIpQBKci6KEg9Q6H9kovIHoCIVQJJCKE1ENFjnAgcaSGC6rEnxBwA04Tx43t2FnvDAfjkNibxgHxnWb2e/u992bee7tCa00YFsffekFY+nUzFtjW0LrvjRXrCDIAaPLlW0nHL0SsZtVoaF98mLrx3pdhOqLtYPHChahZcYYO7KvPFxvRl5XPp1sN3adWiD1ZAqD6XYK1b/dvE5IWryTt2udLFedwc1+9kLp+vbbpoDh+6TklxBeAi9TL0taeWpdmZzQDry0AcO+jQ12RyohqqoYoo8RDwJrU+qXkjWtfi8Xxt58BdQuwQs9qC/afLwCw8tnQbqYAPsgxE1S6F3EAIXux2oQFKm0ihMsOF71dHYx+f3NND68ghCu1YIoePPQN1pGRABkJ6Bus96CutRZMydTl+TvuiRW1m3n0eDl0vRPcEysqdXn+jsQPsrHMquGeXEaY4Yk4wxWcY5V/9scqOMOVUFthatyTy8QyqwZ+kDURKoMWxNKr2EeqVKcTNOajqKoBgOE28U4tdQl5p5bwCw7BWquaZSzAPlwjlithJtp3pTImSqQRrb2Z8PHGigD4RZuNX6JYj6wj7O4TFLbCO/Mn/m8R+h6rYSUb3ekokRY6f/YukArN979jcW+V/S8g0eT/N3VN3kTqWbQ428m9/8k0P/1aIhF36PccEl6EhOcAUCrXKZXXWS3XKd2vc/TRBG9O5ELC17MmWubD2nKhUKZa26Ba2+D3P+4/MNCFwg59oWVeYhkzgN/JDR8deKBoD7Y+ljEjGZ0sosXVTvbc6RHirr2reNy1OXd6pJsQ+gqjk8VWFYmHrwBzW/n+uMPFiRwHB2I7ih8ciHFxIkd/3Omk5tCDV1t+2nNu5sxxpDFNx+huNhVT3/zMDz8usXC3ddaHBj1GHj/As08fwTS7Kt1HBTmyN29vdwAw+/wbwLVOJ3uAD1wi/dUH7Qei66PfyuRj4Ik9is+hglfbkbfR3cnZm7chlUWLdwmprtCohX4HUtlOcQjLYCu+fzGJH2QRKvP3UNz8bWk1qMxjGTOMThZ3kvgLI5AzFfo379UAAAAASUVORK5CYII=",
+                  "dob": "2000-03-25",
+                  "address": "Senen, Jakarta Pusat, Indonesia"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/member/course-like": {
+      "patch": {
+        "summary": "Patch | Member Course Like",
+        "description": "Fitur ini hanya dapat dilakukan ketika sudah mendaftarkan role sebagai student atau instructor",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "success"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/instructor/download-resume": {
+      "get": {
+        "summary": "Get | User Download Instructor Resume",
+        "description": "Mengunduh cv/resume dari instructor jika ada",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID dari course",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "abc123"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": []
+      }
+    }
+  }
+}

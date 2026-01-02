@@ -1,0 +1,28 @@
+import {api} from "./api.js";
+
+export const cartsFetch = (page, sort) => api.get(`/carts?page=${page}&sort=${sort}`);
+export const cartDelete = id => api.delete('/carts?id=' + id);
+export const certificatesFetch = (page, sort) => api.get(`/certificates?page=${page}&sort=${sort}`);
+export const certificateFetch = id => api.get(`/certificates/show?id=${id}`);
+export const certificateStore = data => api.post('/certificates', data);
+export const certificateDownload = id => api.get(`/certificates/download?id=${id}`, {responseType: 'blob'});
+export const courseProgressesFetch = page => api.get(`/progresses?page=${page}`);
+export const courseProgressFetch = courseId => api.get(`/progresses/show?instructor_course_id=${courseId}`);
+export const courseProgressStore = data => api.post('/progresses', data);
+export const courseReviewsFetch = (page, sort) => api.get(`/reviews?page=${page}&sort=${sort}`);
+export const courseReviewStore = data => api.post('/reviews', data);
+export const courseReviewModify = data => api.patch('/reviews', data);
+export const courseReviewDelete = id => api.delete(`/reviews?id=${id}`);
+export const coursesFetch = (page, sort) => api.get(`/studies/courses?page=${page}&sort=${sort}`);
+export const sectionsFetch = courseId => api.get(`/studies/sections?course_id=${courseId}`);
+export const lessonsFetch = (sectionId, page) => api.get(`/studies/lessons?section_id=${sectionId}&page=${page}`);
+export const questionsFetch = (page, sort) => api.get(`/questions?page=${page}&${sort}`);
+export const questionFetch = id => api.get(`/questions/show?id=${id}`);
+export const questionStore = data => api.post('/questions', data);
+export const questionModify = data => api.patch('/questions', data);
+export const questionDelete = questionId => api.delete(`/questions?id=${questionId}`);
+export const transactionsFetch = (page, sort, status) => api.get(`/transactions?page=${page}&sort=${sort}&status=${status}`);
+export const transactionFetch = orderId => api.get(`/transactions/show?order_id=${orderId}`);
+export const transactionStore = data => api.post('/transactions', data);
+export const transactionCheckCoupon = data => api.post('/transactions/check-coupon', data);
+export const transactionDelete = id => api.delete('/transactions?order_id=' + id);

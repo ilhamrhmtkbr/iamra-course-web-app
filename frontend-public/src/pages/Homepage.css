@@ -1,0 +1,64 @@
+.about__anm__section {
+    margin-top: 2rem;
+    max-width: 70dvw;
+    justify-self: center;
+}
+
+.about__anm__container {
+    padding-inline: 2rem;
+    overflow: hidden;
+    position: relative;
+    background-color: var(--second-bg-color);
+    -webkit-mask-image: linear-gradient(90deg, transparent, var(--second-bg-color) 10%, var(--second-bg-color) 90%, transparent);
+}
+
+.about__anm__box {
+    display: flex;
+    width: calc(182px * 22);
+    animation: slide 17s linear infinite;
+}
+
+.about__anm__box:last-child {
+    width: calc(182px * 20);
+    animation-name: rslide;
+}
+
+.about__anm__box:hover {
+    animation-play-state: paused;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(calc(-182px * 11));
+    }
+}
+
+@keyframes rslide {
+    0% {
+        transform: translateX(calc(-182px * 10));
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.about__anm__pack {
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-color);
+    height: 150px;
+    margin: 0 16px;
+    border-radius: 1rem;
+    box-shadow: var(--box-shadow);
+}
+
+.about__anm__pack__svg {
+    max-height: 31px;
+}

@@ -1,0 +1,21 @@
+# Mengirim header Host asli dari client ke backend agar backend tahu domain request asli.
+proxy_set_header Host $host;
+# Mengirim IP asli client agar backend dapat mengetahui alamat IP user.
+proxy_set_header X-Real-IP $remote_addr;
+# Melacak daftar IP yang melewati proxy, penting untuk logging dan keamanan.
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+# Timeout maksimum Nginx menunggu response dari backend (disesuaikan karena Laravel/FrankenPHP bisa lama).
+proxy_read_timeout 60s;
+# Timeout saat Nginx mencoba connect ke backend, jika backend tidak responsif dianggap gagal.
+proxy_connect_timeout 30s;
+# Timeout saat Nginx mengirim request ke backend.
+proxy_send_timeout 30s;
+
+# Ukuran buffer untuk membaca header response backend.
+proxy_buffer_size 16k;
+# Jumlah dan ukuran buffer untuk membaca body response backend.
+proxy_buffers 4 32k;
+# Ukuran maksimal buffer yang sedang dipakai saat menerima response backend.
+proxy_busy_buffers_size 64k;
+# Buffer ini membantu mengoptimalkan performa transfer data dari backend ke client.

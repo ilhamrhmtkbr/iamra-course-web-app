@@ -1,0 +1,17 @@
+name: Main Pipeline
+
+on:
+  push:
+    branches: [ dev ]
+
+jobs:
+  code-quality:
+    uses: ./.github/workflows/ci-code-quality.yaml
+
+  security-scan:
+    needs: code-quality
+    uses: ./.github/workflows/ci-security-scan.yaml
+
+  integration-testing:
+    needs: security-scan
+    uses: ./.github/workflows/ci-integration-testing.yaml

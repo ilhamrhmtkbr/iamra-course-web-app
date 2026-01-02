@@ -1,0 +1,133 @@
+name: Integration Testing
+
+on:
+  workflow_call:
+
+jobs:
+  integration-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate Shared Environment Variables
+        id: generate-secrets
+        run: |
+          APP_KEY="base64:$(openssl rand -base64 32)"
+          JWT_SECRET=$(openssl rand -base64 64)
+          REVERB_APP_ID="ci-$(date +%s)"
+          REVERB_APP_KEY="ci-key-$(openssl rand -hex 8)"
+          REVERB_APP_SECRET="ci-secret-$(openssl rand -base64 32)"
+
+          echo "app_key=$APP_KEY" >> $GITHUB_OUTPUT
+          echo "jwt_secret=$JWT_SECRET" >> $GITHUB_OUTPUT
+          echo "reverb_app_id=$REVERB_APP_ID" >> $GITHUB_OUTPUT
+          echo "reverb_app_key=$REVERB_APP_KEY" >> $GITHUB_OUTPUT
+          echo "reverb_app_secret=$REVERB_APP_SECRET" >> $GITHUB_OUTPUT
+
+          echo "::add-mask::$APP_KEY"
+          echo "::add-mask::$JWT_SECRET"
+          echo "::add-mask::$REVERB_APP_SECRET"
+
+      - name: Create Environment Files
+        run: |
+          cd docker/dev
+
+          cat > .env.shared << EOF
+          APP_NAME=iamra.course
+          APP_ENV=testing
+          APP_DEBUG=true
+          APP_TIMEZONE=Asia/Jakarta
+          APP_KEY=${{ steps.generate-secrets.outputs.app_key }}
+          BCRYPT_ROUNDS=10
+          PHP_CLI_SERVER_WORKERS=4
+
+          DB_CONNECTION=mysql
+          DB_HOST=database-mysql
+          DB_PORT=3306
+          DB_DATABASE=iamra_course
+          DB_USERNAME=root
+          DB_PASSWORD=root
+
+          DB_CONNECTION_SECOND=mongodb
+          DB_HOST_SECOND=database-mongo
+          DB_PORT_SECOND=27017
+          DB_DATABASE_SECOND=iamra_course
+          DB_USERNAME_SECOND=
+          DB_PASSWORD_SECOND=
+          DB_AUTHENTICATION_DATABASE_SECOND=iamra
+
+          SESSION_DRIVER=redis
+          SESSION_LIFETIME=120
+          SESSION_ENCRYPT=false
+          SESSION_PATH=/
+          SESSION_DOMAIN=null
+
+          QUEUE_CONNECTION=redis
+          CACHE_DRIVER=redis
+          CACHE_STORE=redis
+          CACHE_PREFIX=
+
+          REDIS_CLIENT=phpredis
+          REDIS_HOST=database-redis
+          REDIS_PASSWORD=null
+          REDIS_PORT=6379
+          REDIS_PREFIX=
+
+          JWT_SECRET=${{ steps.generate-secrets.outputs.jwt_secret }}
+
+          USER_API_VERSION=user-api/v1
+          STUDENT_API_VERSION=student-api/v1
+          INSTRUCTOR_API_VERSION=instructor-api/v1
+          PUBLIC_API_VERSION=public-api/v1
+          FORUM_API_VERSION=forum-api/v1
+          EOF
+
+          for service in user student instructor forum public; do
+            cp .env.shared ../../backend-api-$service/.env
+          done
+
+      - name: Start Docker Services
+        run: |
+          cd docker/dev
+
+          echo "🚀 Starting Docker services..."
+          sudo docker compose -f docker-compose-ci-integration-test.yaml up -d database-mysql database-redis database-mongo
+          sleep 45
+
+          sudo docker compose -f docker-compose-ci-integration-test.yaml up -d backend-api-user
+          sleep 30
+
+          sudo docker compose -f docker-compose-ci-integration-test.yaml up -d backend-api-student backend-api-instructor backend-api-forum backend-api-public
+          sleep 45
+
+          sudo docker compose -f docker-compose-ci-integration-test.yaml ps
+
+      - name: Setup Laravel Applications
+        run: |
+          cd docker/dev
+          sudo docker compose -f docker-compose-ci-integration-test.yaml exec -T backend-api-public php artisan migrate:fresh --seed
+
+      - name: Run Integration Tests
+        run: |
+          cd docker/dev
+          
+          echo "🧪 Running integration tests..."
+          
+          # Test urut by dependency
+          SERVICES=("user" "public" "student" "instructor" "forum")
+          
+          for service in "${SERVICES[@]}"; do
+            echo "Testing backend-api-$service..."
+            sudo docker compose -f docker-compose-ci-integration-test.yaml exec -T \
+              backend-api-$service php artisan test --stop-on-failure || exit 1
+          done
+          
+          echo "✅ All integration tests passed!"
+
+      - name: Cleanup Docker
+        if: always()
+        run: |
+          cd docker/dev
+          sudo docker compose -f docker-compose-ci-integration-test.yaml down -v --remove-orphans
+          sudo docker system prune -f

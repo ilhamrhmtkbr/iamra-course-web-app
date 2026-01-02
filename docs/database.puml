@@ -1,0 +1,246 @@
+@startuml
+
+entity User {
+    * username : text <<PK>>
+    * password : text
+    --
+    * full_name : text
+    * email : text
+    email_token : string
+    email_verified_at : timestamp
+    image : text
+    * role : enum
+    dob : date
+    address : text
+    --
+    * created_at : timestamp
+    * updated_at : timestamp
+}
+
+entity Student {
+    * user_id : text <<PK>>
+    --
+    * category : enum
+    summary : text
+}
+
+entity Instructor {
+    * user_id : text <<PK>>
+    --
+    * resume : text
+    summary : text
+}
+
+entity InstructorSocial {
+    * id : number <<Generated>> <<PK>>
+    * instructor_id : text <<PK>>
+    --
+    * url_link : text
+    * app_name : text
+    display_name : text
+    --
+    * created_at : timestamp
+    * updated_at : timestamp
+}
+
+entity InstructorAccount {
+    * id : text <<Generated>> <<PK>>
+    * instructor_id : text <<FK>>
+    --
+    * account_id : number
+    * bank_name : text
+    * alias_name : text
+    --
+    * created_at : timestamp
+    * updated_at : timestamp
+}
+
+entity InstructorCourse {
+    * id : text <<Generated>> <<PK>>
+    * instructor_id : text <<FK>>
+    --
+    * title : text
+    * description : text
+    * image : text
+    * price : number
+    * level : enum
+    * status : enum
+    * notes : text
+    * requirements : text
+    * editor : enum
+    --
+    * created_at : timestamp
+    * updated_at : timestamp
+}
+
+entity InstructorCourseCoupon {
+    * id : number <<PK>>
+    * instructor_course_id : text <<FK>>
+    --
+    * discount : number
+    * max_redemptions : number
+    * expiry_date : date
+}
+
+entity InstructorCourseReview {
+    * id : number <<Generated>> <<PK>>
+    * instructor_course_id : text <<FK>>
+    * student_id : text <<FK>>
+    --
+    * review : text
+    * rating : text
+    --
+    * created_at : timestamp
+    * updated_at : timestamp
+}
+
+entity InstructorCourseLike {
+    * student_id : text <<FK>>
+    * instructor_course_id : text <<FK>>
+    --
+    * created_at : timestamp
+}
+
+entity InstructorEarning {
+    * order_id : text <<Generated>>
+    * instructor_course_id : text <<FK>>
+    * student_id : text <<FK>>
+    --
+    * amount : number
+    * status : enum
+    --
+    * created_at : timestamp
+    * updated_at : timestamp
+}
+
+entity InstructorSection {
+    * id : number <<Generated>> <<PK>>
+    * instructor_course_id : text <<FK>>
+    --
+    * title : text
+    * order_in_course : number
+    --
+    * created_at : timestamp
+    * updated_at : timestamp
+}
+
+entity InstructorLesson {
+    * id : number <<Generated>> <<PK>>
+    * instructor_section_id : number <<FK>>
+    --
+    * title : text
+    * description : text
+    * code : text
+    * order_in_section : number
+    --
+    * created_at : timestamp
+    * updated_at : timestamp
+}
+
+entity StudentQuestion {
+    * id : number <<Generated>> <<PK>>
+    * student_id : text <<FK>>
+    * instructor_course_id : text <<FK>>
+    --
+    * question : text
+    --
+    * created_at : timestamp
+    * updated_at : timestamp
+}
+
+entity InstructorAnswer {
+    * id : number <<Generated>> <<PK>>
+    * instructor_id : text <<FK>>
+    * student_question_id : number <<FK>>
+    --
+    * answer : text
+    --
+    * created_at : timestamp
+    * updated_at : timestamp
+}
+
+entity StudentCart {
+    * id : number <<Generated>> <<PK>>
+    * student_id : text <<FK>>
+    * instructor_course_id : text <<FK>>
+    --
+    * created_at : timestamp
+    * updated_at : timestamp
+}
+
+entity StudentTransaction {
+    * order_id : text <<Generated>>
+    * student_id : text <<FK>>
+    * instructor_course_id : text <<FK>>
+    * instructor_course_coupon : text <<FK>>
+    --
+    * amount : number
+    * midtrans_data : json
+    * status : enum
+    --
+    * created_at : timestamp
+    * updated_at : timestamp
+}
+
+entity StudentCourseProgress {
+    * id : number <<Generated>> <<PK>>
+    * student_id : text <<FK>>
+    * instructor_course_id : number <<FK>>
+    * sections: json
+    --
+    * created_at : timestamp
+    * updated_at : timestamp
+}
+
+entity StudentCourseCertificates {
+    * id : text <<Generated>> <<PK>>
+    * student_id : text <<FK>>
+    * instructor_course_id : text <<FK>>
+    --
+    * created_at : timestamp
+    * updated_at : timestamp
+}
+
+entity DiscussionForum {
+    * id : number <<Generated>> <<PK>>
+    * user_id : text <<FK>>
+    * instructor_course_id : text <<FK>>
+    --
+    * message : text
+    --
+    * created_at : timestamp
+    * updated_at : timestamp
+}
+
+User ||--o{ Student
+User ||--o{ Instructor
+InstructorSocial }o--|| Instructor
+InstructorAccount ||--|| Instructor
+InstructorCourse }o--|| Instructor
+InstructorCourse ||--o| InstructorCourseCoupon
+InstructorCourseReview }o--|| InstructorCourse
+InstructorCourseReview }o-|| Student
+InstructorCourseLike }o--|| InstructorCourse
+InstructorCourseLike }o--|| Student
+InstructorCourseLike }o--|| Instructor
+InstructorEarning }o--|| Instructor
+InstructorSection }o--|| InstructorCourse
+InstructorLesson }o--|| InstructorSection
+StudentQuestion }o--|| Student
+StudentQuestion }|--|| InstructorCourse
+InstructorAnswer }o--|| Instructor
+InstructorAnswer ||--|| StudentQuestion
+StudentCart }o--|| Student
+StudentCart }o--|| InstructorCourse
+StudentTransaction }o--|| Student
+StudentTransaction }|--|| InstructorCourse
+StudentTransaction ||--o| InstructorCourseCoupon
+StudentCourseProgress }o--|| Student
+StudentCourseProgress }o--|{ InstructorSection
+StudentCourseCertificates }o--|| Student
+StudentCourseCertificates }o--|| InstructorCourse
+DiscussionForum }o--|{ User
+DiscussionForum }o--|{ InstructorCourse
+
+
+@enduml

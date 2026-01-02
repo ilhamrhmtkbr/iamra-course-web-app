@@ -1,0 +1,84 @@
+{
+  "instructor": "Instructor",
+  "student": "Student",
+
+  "certificate_verify" : "Certificate Verify",
+
+  "courses": "Courses",
+  "profile": "profile",
+
+  "created_at": "Created at",
+  "updated_at": "Updated at",
+
+  "additional_info": "Additional Info",
+  "username": "Username",
+  "password": "Password",
+  "password_confirmation": "Password Confirmation",
+  "old_password": "Old Password",
+  "new_password": "New Password",
+  "show_password": "Show Password",
+  "full_name": "Full Name",
+  "first_name": "First Name",
+  "middle_name": "Middle Name",
+  "last_name": "Last Name",
+  "image": "Image",
+  "address": "Address",
+  "dob": "Date Of Birth",
+  "authentication": "Authentication",
+  "role_register": "Role Register",
+  "category": "Category",
+  "summary": "Summary",
+  "email": "Email",
+  "now": "Now",
+
+  "visit": "Visit",
+  "logout": "Logout",
+
+  "email_successfully_verified" : "Email successfully verified, please log in again : ",
+  "email_hasnt_verified": "Your email has not been verified",
+
+  "page_not_found": "The page you are looking for is not found, please visit this page",
+
+  "authentication_great1":"Learn now, enjoy the results later.",
+  "authentication_great2": "Join as a member today and unlock full access to all courses!",
+  "authentication_great3": "Or see our courses first →",
+  "authentication_login_question": "Already have an account?",
+  "authentication_register_question": "Don't have an account yet?",
+
+  "member_email_timeline_1_title": "Form Submitted",
+  "member_email_timeline_1_desc": "You have filled out and submitted the form via email",
+  "member_email_timeline_1_time": "Just now",
+
+  "member_email_timeline_2_title": "Email Verification",
+  "member_email_timeline_2_desc": "Please check your inbox and click the Verify button",
+  "member_email_timeline_2_time": "Awaiting action",
+
+  "member_email_timeline_3_title": "Complete the Process",
+  "member_email_timeline_3_desc": "Reopen the app or website, then click the Agree button on the pop-up that appears",
+  "member_email_timeline_3_time": "Next step",
+
+  "member_email_timeline_4_title": "Email successfully verified",
+  "member_email_timeline_4_desc": "You can proceed to the next registration step",
+  "member_email_timeline_4_time": "Choose Role",
+
+  "validation": {
+    "required": "{{attribute}} is required.",
+    "min": "{{attribute}} must be at least {{min}} characters.",
+    "max": "{{attribute}} must be at most {{max}} characters.",
+    "no_profanity_sentence": "This sentence contains profanity : \"{{sentence}}\"",
+    "only_lowercase": "{{attribute}} must only contain lowercase letters without spaces.",
+    "passwords_must_match": "{{attribute}} does not match the password.",
+    "letters": "{{attribute}} must contain at least one lowercase letter.",
+    "uppercase": "{{attribute}} must contain at least one uppercase letter.",
+    "numbers": "{{attribute}} must contain at least one number.",
+    "symbols": "{{attribute}} must contain at least one symbol.",
+    "image_format": "The image must be a valid base64 image (jpeg, png, jpg, gif, svg, or webp).",
+    "max_image_size": "The image must be less than {{maxMB}}MB in size.",
+    "date": "{{attribute}} must be a valid date.",
+    "not_in_future": "{{attribute}} not allowed in the future.",
+    "email": "{{attribute}} must be a valid email address.",
+    "max_file": "Maximum file size {{max}}.",
+    "invalid_file_type": "File type not supported.",
+    "enum": "Please select according to the following options : {{enum}}"
+  }
+}

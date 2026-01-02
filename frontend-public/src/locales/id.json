@@ -1,0 +1,133 @@
+{
+  "instructor": "Instruktur",
+  "student": "Siswa",
+  "visitor": "Pengunjung",
+
+  "courses": "Kursus",
+  "certificates": "Sertifikat",
+  "about" : "Tentang",
+  "profile": "Profile",
+  "setting": "Pengaturan",
+
+  "search" : "Cari",
+  "course": "Kursus",
+  "description": "Deskripsi",
+  "price": "Harga",
+  "level": "Tingkat",
+  "status": "Status",
+  "notes": "Catatan",
+  "visibility": "Visibilitas",
+  "requirements": "Persyaratan",
+  "editor": "Syntax",
+  "created_at": "Dibuat pada",
+  "updated_at": "Diperbarui pada",
+  "detail": "Rincian",
+
+  "download": "Unduh",
+  "see_sections": "Lihat Materi",
+  "now": "Sekarang",
+
+  "data_not_found" : "Data Tidak Ditemukan",
+  "explore_now" : "Jelajahi Sekarang",
+
+  "course_title" : "Judul Kursus",
+  "courses_likes": "Suka Kursus",
+  "welcome": "Selamat datang",
+
+  "about_download_the_mobile_version_of_the_android_application" : "Unduh versi seluler dari aplikasi Android",
+  "about_great_subtitle": "Platform terbaik untuk belajar coding secara fleksibel!",
+  "about_great_desc": "Tingkatkan keterampilan pemrograman Anda bersama instruktur berpengalaman dan komunitas interaktif.",
+  "about_great_button": "Ayo mulai perjalanan belajarmu sekarang!",
+  "about_info_student_1_title": "Pilih & Beli Kursus Sesuai Minat",
+  "about_info_student_1_desc": "Jelajahi berbagai kursus di OlCourse dan temukan yang paling sesuai dengan kebutuhan Anda. Dari pemrograman hingga teknologi terbaru, semua tersedia di sini!",
+  "about_info_student_2_title": "Akses Materi Kapan Saja, Di Mana Saja",
+  "about_info_student_2_desc": "Setelah membeli kursus, Anda bisa langsung mengakses semua materi tanpa batasan waktu. Belajar secara fleksibel sesuai ritme dan kesibukan Anda!",
+  "about_info_student_3_title": "Ikuti Pelajaran & Kerjakan Tugas",
+  "about_info_student_3_desc": "Setiap kursus dirancang dengan materi yang sistematis dan mudah dipahami. Ikuti modul pembelajaran untuk memperdalam pemahaman Anda.",
+  "about_info_student_4_title": "Diskusi & Bertanya ke Instruktur",
+  "about_info_student_4_desc": "Jangan ragu untuk bertanya! Bergabunglah dalam forum diskusi, ajukan pertanyaan kepada instruktur, dan belajar bersama komunitas.",
+  "about_info_student_5_title": "Selesaikan Kursus & Dapatkan Sertifikat",
+  "about_info_student_5_desc": "Setelah menyelesaikan semua materi, Anda akan mendapatkan sertifikat resmi sebagai bukti keahlian yang dapat digunakan untuk karier atau portofolio Anda!",
+  "about_info_instructor_1_title": "Buat & Unggah Kursus Sendiri",
+  "about_info_instructor_1_desc": "Sebagai Instruktur, Anda dapat membagikan pengetahuan dan pengalaman dengan membuat kursus berkualitas. Unggah materi dalam bentuk video, dokumen, dan tugas interaktif.",
+  "about_info_instructor_2_title": "Kelola & Perbarui Konten",
+  "about_info_instructor_2_desc": "Sesuaikan dan perbarui materi kursus kapan saja agar tetap relevan. Pastikan siswa mendapatkan pembelajaran terbaik dengan informasi yang selalu diperbarui!",
+  "about_info_instructor_3_title": "Bantu Siswa dengan Diskusi & Tanya Jawab",
+  "about_info_instructor_3_desc": "Berinteraksilah dengan siswa melalui forum diskusi atau sesi tanya jawab. Bantu mereka memahami materi secara mendalam dan ciptakan komunitas belajar yang aktif!",
+  "about_info_instructor_4_title": "Bangun Reputasi & Raih Lebih Banyak Siswa",
+  "about_info_instructor_4_desc": "Semakin banyak kursus berkualitas yang Anda buat, semakin banyak siswa yang tertarik untuk belajar dari Anda. Bangun reputasi sebagai instruktur terbaik di bidang Anda!",
+  "about_info_instructor_5_title": "Hasilkan Uang dari Kursus Anda",
+  "about_info_instructor_5_desc": "Setiap siswa yang membeli kursus Anda akan berkontribusi pada penghasilan Anda. Semakin banyak siswa yang belajar, semakin besar penghasilan Anda!",
+
+  "about_faq_student_1_question": "Apakah platform ini cocok untuk pemula?",
+  "about_faq_student_1_subtitle": "Ya, platform kami dirancang untuk semua level termasuk pemula.",
+  "about_faq_student_1_content": "Ya! Kami menyediakan kursus dari dasar hingga mahir, dengan penjelasan yang mudah dipahami serta proyek nyata untuk membantu kamu memahami konsep pemrograman secara bertahap.",
+
+  "about_faq_student_2_question": "Bahasa pemrograman apa saja yang tersedia?",
+  "about_faq_student_2_subtitle": "Kami menyediakan berbagai bahasa seperti JavaScript, Python, dan lainnya.",
+  "about_faq_student_2_content": "Kami menawarkan kursus untuk JavaScript, Python, HTML/CSS, React, Node.js, dan banyak lagi. Kami juga terus menambah konten baru sesuai kebutuhan industri.",
+
+  "about_faq_student_3_question": "Apakah saya mendapatkan sertifikat setelah menyelesaikan kursus?",
+  "about_faq_student_3_subtitle": "Ya, sertifikat digital tersedia untuk semua kursus berbayar dan gratis.",
+  "about_faq_student_3_content": "Setelah menyelesaikan kursus, kamu akan mendapatkan sertifikat digital yang bisa digunakan untuk memperkuat CV atau profil LinkedIn kamu.",
+
+  "about_faq_student_4_question": "Apakah kursus bisa diakses selamanya?",
+  "about_faq_student_4_subtitle": "Ya, akses kursus tidak memiliki batas waktu.",
+  "about_faq_student_4_content": "Setelah kamu mendaftar ke sebuah kursus, kamu bisa mengaksesnya kapan saja tanpa batas waktu. Belajar sesuai kecepatanmu sendiri!",
+
+  "about_faq_student_5_question": "Bagaimana cara bergabung ke kelas?",
+  "about_faq_student_5_subtitle": "Cukup daftar akun dan pilih kelas yang kamu inginkan.",
+  "about_faq_student_5_content": "Kamu hanya perlu membuat akun gratis, lalu kamu bisa langsung mulai kelas gratis atau melakukan pembayaran untuk kelas premium.",
+
+  "about_faq_student_6_question": "Apakah ada mentor atau forum diskusi?",
+  "about_faq_student_6_subtitle": "Kami menyediakan komunitas serta bimbingan dari mentor.",
+  "about_faq_student_6_content": "Ya, kamu bisa berdiskusi dengan sesama peserta di forum atau grup komunitas, dan untuk beberapa kelas tersedia mentor yang bisa membimbing kamu secara langsung.",
+
+  "about_faq_student_7_question": "Apakah bisa belajar lewat HP?",
+  "about_faq_student_7_subtitle": "Ya, platform kami responsif dan mendukung akses via perangkat mobile.",
+  "about_faq_student_7_content": "Tentu saja! Website kami dapat diakses dari smartphone, tablet, maupun desktop. Kamu bisa belajar kapan saja dan di mana saja.",
+
+  "about_faq_instructor_1_question": "Bagaimana cara menjadi instructor di platform ini?",
+  "about_faq_instructor_1_subtitle": "Kamu hanya perlu daftar dan mengajukan proposal kursus.",
+  "about_faq_instructor_1_content": "Untuk menjadi instructor, cukup daftar akun dan isi formulir pengajuan kursus. Tim kami akan meninjau materi dan memberikan umpan balik atau persetujuan.",
+
+  "about_faq_instructor_2_question": "Apakah saya harus punya pengalaman mengajar?",
+  "about_faq_instructor_2_subtitle": "Tidak wajib, tapi pengalaman mengajar adalah nilai tambah.",
+  "about_faq_instructor_2_content": "Kami menerima instructor dari berbagai latar belakang. Selama kamu bisa menyampaikan materi secara jelas dan terstruktur, kamu bisa menjadi instructor, meskipun belum pernah mengajar sebelumnya.",
+
+  "about_faq_instructor_3_question": "Materi seperti apa yang bisa saya ajarkan?",
+  "about_faq_instructor_3_subtitle": "Segala topik coding, teknologi, atau tools relevan.",
+  "about_faq_instructor_3_content": "Kamu bisa mengajarkan topik seperti pemrograman, web development, data science, AI/ML, DevOps, UI/UX, dan lainnya. Kami terbuka terhadap topik baru sepanjang relevan dan dibutuhkan oleh pelajar kami.",
+
+  "about_faq_instructor_4_question": "Apakah saya akan dibayar?",
+  "about_faq_instructor_4_subtitle": "Ya, instructor mendapatkan bagi hasil dari pendapatan kursus.",
+  "about_faq_instructor_4_content": "Instructor akan mendapatkan komisi dari setiap pembelian kursus. Persentase dan sistem pembayarannya transparan dan akan dijelaskan saat onboarding.",
+
+  "about_faq_instructor_5_question": "Platform apa yang digunakan untuk merekam kursus?",
+  "about_faq_instructor_5_subtitle": "Kamu bisa merekam pakai software seperti OBS, Screenity, atau Camtasia.",
+  "about_faq_instructor_5_content": "Kami tidak mewajibkan software tertentu. Kamu bisa merekam video menggunakan alat yang kamu nyaman, selama kualitas video dan audio jernih dan profesional.",
+
+  "about_faq_instructor_6_question": "Apakah saya bisa meng-update materi setelah dipublikasikan?",
+  "about_faq_instructor_6_subtitle": "Ya, kamu bisa memperbarui konten kapan saja.",
+  "about_faq_instructor_6_content": "Kamu bebas memperbarui atau menambahkan materi, video, atau dokumen pendukung kapan saja. Kami sangat mendukung instructor yang ingin menjaga kursusnya tetap up-to-date.",
+
+  "about_faq_instructor_7_question": "Apakah saya bisa mengadakan live session atau Q&A?",
+  "about_faq_instructor_7_subtitle": "Ya, kamu bisa menyelenggarakan sesi live secara terjadwal.",
+  "about_faq_instructor_7_content": "Instructor diperbolehkan mengadakan sesi live atau Q&A secara berkala. Ini akan memperkuat keterlibatan siswa dan memperjelas topik yang sulit dipahami.",
+
+  "course_instructor_no_resume": "Instruktur belum mengunggah resume",
+  "course_instructor_no_summary": "Instruktur belum menambahkan ringkasan",
+  "course_instructor_no_social": "Instruktur belum menautkan tautan media sosial apa pun",
+  "course_like_must_login" : "Anda belum masuk, masuk sekarang??",
+  "course_like_must_login_as_student" : "Anda bukan murid",
+  "course_add_to_cart": "Tambahkan ke keranjang",
+
+  "certificate_stepper_1": "Selesaikan kursus",
+  "certificate_stepper_2": "Mendapatkan sertifikat",
+  "certificate_verify_not_found": "Sertifikat tidak ditemukan",
+  "certificate_verify": "Verifikasi Sertifikat",
+  "certificate_id": "ID Sertifikat",
+  "certificate_card_text_1": "Sertifikat Penyelesaian",
+  "certificate_card_text_2": "Ini menyatakan bahwa",
+  "certificate_card_text_3": "telah berhasil menyelesaikan kursus"
+}

@@ -1,0 +1,84 @@
+{
+  "instructor": "Instruktur",
+  "student": "Siswa",
+
+  "courses": "Kursus",
+  "profile": "Profil",
+
+  "created_at": "Dibuat pada",
+  "updated_at": "Diperbarui pada",
+
+  "additional_info": "Informasi Tambahan",
+  "username": "Nama Pengguna",
+  "password": "Kata Sandi",
+  "password_confirmation": "Konfirmasi Kata Sandi",
+  "old_password": "Kata Sandi Lama",
+  "new_password": "Kata Sandi Baru",
+  "show_password": "Tampilkan Kata Sandi",
+  "full_name": "Nama Lengkap",
+  "first_name": "Nama Depan",
+  "middle_name": "Nama Tengah",
+  "last_name": "Nama Belakang",
+  "image": "Gambar",
+  "address": "Alamat",
+  "dob": "Tanggal Lahir",
+  "authentication": "Autentikasi",
+  "role_register": "Daftar Peran",
+  "category": "Kategori",
+  "summary": "Ringkasan",
+  "email": "Surel",
+  "now": "Sekarang",
+
+  "visit": "Kunjungi",
+  "logout": "Keluar",
+
+  "email_successfully_verified" : "Email berhasil diverifikasi, silahkan login ulang : ",
+  "email_hasnt_verified": "Email Anda belum diverifikasi",
+
+  "page_not_found": "Halaman yang Anda cari tidak ditemukan, silakan kunjungi halaman ini",
+
+  "authentication_great1": "Belajar sekarang, nikmati hasilnya nanti.",
+  "authentication_great2": "Bergabunglah sebagai anggota hari ini dan dapatkan akses penuh ke semua kursus!",
+  "authentication_great3": "Atau lihat dulu kursus kami →",
+  "authentication_login_question": "Sudah punya akun?",
+  "authentication_register_question": "Belum punya akun?",
+
+  "member_email_timeline_1_title": "Formulir Terkirim",
+  "member_email_timeline_1_desc": "Kamu telah mengisi dan mengirimkan formulir melalui email",
+  "member_email_timeline_1_time": "Baru saja",
+
+  "member_email_timeline_2_title": "Verifikasi Email",
+  "member_email_timeline_2_desc": "Silakan periksa kotak masuk email dan klik tombol Verifikasi",
+  "member_email_timeline_2_time": "Menunggu tindakan",
+
+  "member_email_timeline_3_title": "Selesaikan Proses",
+  "member_email_timeline_3_desc": "Buka kembali aplikasi atau website, lalu klik tombol Setuju pada pop-up yang muncul",
+  "member_email_timeline_3_time": "Langkah berikutnya",
+
+  "member_email_timeline_4_title": "Email berhasil diverifikasi",
+  "member_email_timeline_4_desc": "Anda bisa melanjutkan ke proses pendaftaran selanjutnya",
+  "member_email_timeline_4_time": "Daftar Peran",
+
+  "certificate_verify" : "Verifikasi Sertifikat",
+
+  "validation": {
+    "required": "{{attribute}} wajib diisi.",
+    "min": "{{attribute}} minimal {{min}} karakter.",
+    "max": "{{attribute}} maksimal {{max}} karakter.",
+    "no_profanity_sentence": "Kalimat ini mengandung kata kasar : \"{{sentence}}\"",
+    "only_lowercase": "{{attribute}} hanya boleh huruf kecil tanpa spasi.",
+    "passwords_must_match": "{{attribute}} tidak cocok dengan kata sandi.",
+    "letters": "{{attribute}} harus mengandung huruf kecil.",
+    "uppercase": "{{attribute}} harus mengandung huruf besar.",
+    "numbers": "{{attribute}} harus mengandung angka.",
+    "symbols": "{{attribute}} harus mengandung simbol.",
+    "image_format": "Gambar harus berupa base64 yang valid (jpeg, png, jpg, gif, svg, atau webp).",
+    "max_image_size": "Ukuran gambar tidak boleh lebih dari {{maxMB}}MB.",
+    "date": "{{attribute}} harus berupa tanggal yang valid.",
+    "not_in_future": "{{attribute}} tidak boleh di masa depan.",
+    "email": "{{attribute}} harus berupa alamat email yang valid.",
+    "max_file": "Ukuran file maksimal {{max}}.",
+    "invalid_file_type": "Tipe file tidak didukung.",
+    "enum": "Silakan pilih sesuai dengan pilihan berikut : {{enum}}"
+  }
+}

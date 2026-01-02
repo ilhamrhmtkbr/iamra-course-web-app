@@ -1,0 +1,27 @@
+FROM dunglas/frankenphp:php8.2
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    git curl \
+    zip unzip \
+    libzip-dev \
+    supervisor \
+    && docker-php-ext-install pdo_mysql zip opcache pcntl \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+RUN groupadd -g 1000 ilhamrhmtkbr && useradd -u 1000 -g ilhamrhmtkbr -m ilhamrhmtkbr
+
+COPY docker/dev/backend-laravel/_shared/php-custom-api-shared.ini /usr/local/etc/php/conf.d/99-custom.ini
+COPY docker/dev/backend-laravel/_shared/entrypoint-api-supervisord-shared.sh /usr/local/bin/entrypoint.sh
+COPY docker/dev/backend-laravel/user/supervisord-api-user-queue.conf /etc/supervisor/conf.d/supervisord.conf
+
+RUN mkdir -p /var/log && chown -R ilhamrhmtkbr:ilhamrhmtkbr /var/log
+
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

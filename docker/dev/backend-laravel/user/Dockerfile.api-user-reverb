@@ -1,0 +1,22 @@
+FROM php:8.2-cli
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    gosu \
+    zip unzip \
+    libzip-dev \
+    && docker-php-ext-install pdo_mysql bcmath zip pcntl \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+RUN groupadd -g 1000 ilhamrhmtkbr && useradd -u 1000 -g ilhamrhmtkbr -m ilhamrhmtkbr
+
+COPY docker/dev/backend-laravel/user/entrypoint-api-user-reverb.sh /usr/local/bin/entrypoint.sh
+
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

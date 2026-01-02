@@ -1,0 +1,198 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Api Khusus Role Instructor dan Student untuk diskusi terkait kursus",
+    "description": "Sebuah backend api yang dirancang untuk melakukan diskusi terkait kursus",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Ilham Rahmat Akbar",
+      "email": "ilhamrhmtkbr@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "description": "RESTful API Server",
+      "url": "{environment}",
+      "variables": {
+        "environment": {
+          "description": "Server Environtment",
+          "default": "https://unique-id.ngrok-free.app/forum-api/v1",
+          "enum": [
+            "https://unique-id.ngrok-free.app/forum-api/v1",
+            "http://localhost:8000/forum-api/v1",
+            "http://forum-api.course.iamra.site",
+            "https://forum-api.course.iamra.site"
+          ]
+        }
+      }
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "CookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "access_token"
+      }
+    },
+    "parameters": {
+      "AcceptLanguage": {
+        "name": "Accept-Language",
+        "in": "header",
+        "description": "Bahasa Yang di Gunakan",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "id"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/data": {
+      "get": {
+        "summary": "Forum ",
+        "description": "Endpoint ini digunakan untuk student dan instructor mendapatkan seluruh grup diskusi, jika student maka grup diskusi yang tampil berdasarkan kursus yang telah lunas dan instructor kursus yang dimiliki",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Get data successfully",
+                  "data": [
+                    {
+                      "id": "04699fb5-81da-481e-aa7d-2935e3fac81a",
+                      "title": "Belajar PHP dari Dasar",
+                      "description": "Kursus ini akan membahas dasar-dasar PHP mulai dari sintaks dasar, variabel, tipe data, hingga konsep OOP. Cocok untuk pemula yang ingin memahami bagaimana PHP digunakan dalam pengembangan web.",
+                      "image": "courses",
+                      "editor": "php"
+                    },
+                    {
+                      "id": "07e21fd2-c9bd-4934-a161-f2920454122f",
+                      "title": "Menguasai Git dan Version Control",
+                      "description": "Pelajari bagaimana menggunakan Git untuk version control, mulai dari dasar hingga fitur lanjutan seperti branching, merging, rebase, dan collaborative development menggunakan GitHub\/GitLab.",
+                      "image": "courses",
+                      "editor": "bash"
+                    },
+                    {
+                      "id": "1ccd82b7-3f16-41a5-a7e0-2dac0869e0ff",
+                      "title": "Pemrograman C++ untuk Pemula",
+                      "description": "Kursus ini akan membahas pemrograman C++ dari dasar, mencakup struktur kode, variabel, tipe data, loop, hingga konsep Object-Oriented Programming (OOP).",
+                      "image": "courses",
+                      "editor": "cpp"
+                    },
+                    {
+                      "id": "57750f38-163f-47d9-9e0a-82621c650648",
+                      "title": "Pemrograman MySQL untuk Database",
+                      "description": "Dalam kursus ini, Anda akan belajar bagaimana menggunakan MySQL untuk mengelola database, termasuk pembuatan tabel, penggunaan query SQL, optimasi database, indexing, dan transaksi database.",
+                      "image": "courses",
+                      "editor": "sql"
+                    },
+                    {
+                      "id": "5b0c6efb-171c-4b51-b4d3-1e157399bdde",
+                      "title": "Docker",
+                      "description": "Pelajari bagaimana containerization bekerja dengan Docker. Kursus ini akan mengajarkan cara membuat, mengelola, dan mendistribusikan container untuk berbagai aplikasi menggunakan Docker.",
+                      "image": "courses",
+                      "editor": "bash"
+                    },
+                    {
+                      "id": "bc2fd5d9-3250-4e50-b7b6-c865f25d68cf",
+                      "title": "Fundamental SQL Server",
+                      "description": "Kursus ini mengajarkan konsep dasar hingga lanjutan dalam pengelolaan database menggunakan SQL Server. Anda akan belajar tentang stored procedure, indexing, triggers, serta optimasi query untuk meningkatkan performa database.",
+                      "image": "courses",
+                      "editor": "sql"
+                    },
+                    {
+                      "id": "f3ab42bb-7457-470e-96eb-f87270a51e8e",
+                      "title": "Python",
+                      "description": "Kursus ini dirancang untuk membantu Anda memahami bagaimana Python digunakan dalam analisis data, statistik, dan machine learning. Anda akan belajar menggunakan library seperti NumPy, Pandas, Matplotlib, dan Scikit-learn.",
+                      "image": "courses",
+                      "editor": "python"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Sent Message",
+        "description": "Endpoint ini digunakan untuk student",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil menyimpan data"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "message": "Hello 123",
+                  "course_id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    }
+  }
+}

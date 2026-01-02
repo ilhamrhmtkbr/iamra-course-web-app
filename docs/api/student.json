@@ -1,0 +1,1892 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Api Khusus Role Student",
+    "description": "Sebuah backend api yang dirancang untuk menjalankan fitur fitur yang hanya bisa di akses role student",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Ilham Rahmat Akbar",
+      "email": "ilhamrhmtkbr@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "description": "RESTful API Server",
+      "url": "{environment}",
+      "variables": {
+        "environment": {
+          "description": "Server Environtment",
+          "default": "https://unique-id.ngrok-free.app/student-api/v1",
+          "enum": [
+            "https://unique-id.ngrok-free.app/student-api/v1",
+            "http://localhost:8000/student-api/v1",
+            "http://student-api.course.iamra.site",
+            "https://student-api.course.iamra.site"
+          ]
+        }
+      }
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "CookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "access_token"
+      }
+    },
+    "parameters": {
+      "AcceptLanguage": {
+        "name": "Accept-Language",
+        "in": "header",
+        "description": "Bahasa Yang di Gunakan",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "id"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/carts": {
+      "get": {
+        "summary": "Get | Student Cart",
+        "description": "Endpoint ini digunakan untuk student mendapatkan data kursus",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil mengambil data",
+                  "data": {
+                    "current_page": 1,
+                    "data": [
+                      {
+                        "id": 1,
+                        "student_id": "student",
+                        "instructor_course_id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba",
+                        "instructor_course": {
+                          "id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba",
+                          "title": "COURSE_TITLE",
+                          "description": "COURSE_DESCRIPTION",
+                          "image": "instructor-course-images\/4be8b5e6-8054-4c78-9b70-6510a24a37ba.jpg",
+                          "price": 15000,
+                          "level": "junior",
+                          "status": "paid"
+                        }
+                      }
+                    ],
+                    "first_page_url": "http:\/\/localhost:8000\/api\/v1\/student\/carts?page=1",
+                    "from": 1,
+                    "last_page": 1,
+                    "last_page_url": "http:\/\/localhost:8000\/api\/v1\/student\/carts?page=1",
+                    "links": [
+                      {
+                        "url": null,
+                        "label": "&laquo; Sebelumnya",
+                        "active": false
+                      },
+                      {
+                        "url": "http:\/\/localhost:8000\/api\/v1\/student\/carts?page=1",
+                        "label": "1",
+                        "active": true
+                      },
+                      {
+                        "url": null,
+                        "label": "Berikutnya &raquo;",
+                        "active": false
+                      }
+                    ],
+                    "next_page_url": null,
+                    "path": "http:\/\/localhost:8000\/api\/v1\/student\/carts",
+                    "per_page": 10,
+                    "prev_page_url": null,
+                    "to": 1,
+                    "total": 1
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Post | Student Cart",
+        "description": "Endpoint ini digunakan untuk student menambahkan kursus ke dalam keranjang belanja",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil menyimpan data"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "instructor_course_id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete | Student Cart",
+        "description": "Endpoint ini digunakan untuk student menghapus kursus dari daftar keranjang",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id Cart",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil menghapus data"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/certificates/show": {
+      "get": {
+        "summary": "Get | Student Certificate",
+        "description": "Endpoint ini digunakan untuk student mendapatkan data sertifikat yang berhasil diperoleh secara detail",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id Sertifikat",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "7669491f-d926-4621-b2a4-f5dec8a01502"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": {
+                    "id": "7669491f-d926-4621-b2a4-f5dec8a01502",
+                    "course": {
+                      "id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba",
+                      "title": "COURSE_TITLE",
+                      "description": "COURSE_DESCRIPTION",
+                      "image": "instructor-course-images\/4be8b5e6-8054-4c78-9b70-6510a24a37ba.jpg",
+                      "price": 15000,
+                      "level": "junior",
+                      "sections": [
+                        {
+                          "id": 1,
+                          "instructor_course_id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba",
+                          "title": "Section Title",
+                          "order_in_course": 1
+                        }
+                      ]
+                    },
+                    "instructor": "Ilham Rahmat Akbar"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/certificates": {
+      "get": {
+        "summary": "Get | Student Certificate",
+        "description": "Endpoint ini digunakan untuk student mendapatkan data seluruh sertifikat yang diperoleh",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Get data successfully",
+                  "data": {
+                    "current_page": 1,
+                    "data": [
+                      {
+                        "id": "8sdAbcDef-f001-4a31-9f1d-d989cef38",
+                        "student_id": "student",
+                        "instructor_course_id": "9cb92dfe-f001-4a31-9f1d-d989cef38515",
+                        "created_at": "12-04-2025 01:24 pm",
+                        "updated_at": "12-04-2025 01:24 pm",
+                        "instructor_course": {
+                          "id": "9cb92dfe-f001-4a31-9f1d-d989cef38515",
+                          "title": "COURSE_TITLE"
+                        },
+                        "student": {
+                          "user_id": "student",
+                          "user": {
+                            "username": "student",
+                            "full_name": "Student"
+                          }
+                        }
+                      }
+                    ],
+                    "first_page_url": "http:\/\/localhost:8000\/api\/v1\/student\/certificates?page=1",
+                    "from": 1,
+                    "last_page": 1,
+                    "last_page_url": "http:\/\/localhost:8000\/api\/v1\/student\/certificates?page=1",
+                    "links": [
+                      {
+                        "url": null,
+                        "label": "&laquo; Previous",
+                        "active": false
+                      },
+                      {
+                        "url": "http:\/\/localhost:8000\/api\/v1\/student\/certificates?page=1",
+                        "label": "1",
+                        "active": true
+                      },
+                      {
+                        "url": null,
+                        "label": "Next &raquo;",
+                        "active": false
+                      }
+                    ],
+                    "next_page_url": null,
+                    "path": "http:\/\/localhost:8000\/api\/v1\/student\/certificates",
+                    "per_page": 4,
+                    "prev_page_url": null,
+                    "to": 1,
+                    "total": 1
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Post | Student Certificate",
+        "description": "Endpoint ini digunakan untuk student menambahkan sertifikat",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil menyimpan data"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "instructor_course_id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/certificates/download": {
+      "get": {
+        "summary": "Get | Student Certificate Download",
+        "description": "Endpoint ini digunakan untuk student mengunduh sertifikat",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id Sertifikat",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "7669491f-d926-4621-b2a4-f5dec8a01502"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/transactions/show": {
+      "get": {
+        "summary": "Get | Student Transaction",
+        "description": "Endpoint ini digunakan untuk student menampilkan detail transaksi yang dipilih",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "query",
+            "description": "Order Id Transaksi",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "67ce17e5eb40d"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil mengambil data",
+                  "data": {
+                    "order_id": "67ce17e5eb40d",
+                    "student_id": "student",
+                    "instructor_course_id": "69033a9c-3ef2-4c24-9252-7849db8c897d",
+                    "instructor_course_coupon_id": null,
+                    "amount": 15000,
+                    "midtrans_data": "{\"token\": \"d8695ae8-e9ad-420e-b287-44a148d2c7fa\", \"redirect_url\": \"https:\/\/app.sandbox.midtrans.com\/snap\/v4\/redirection\/d8695ae8-e9ad-420e-b287-44a148d2c7fa\"}",
+                    "status": "pending",
+                    "created_at": "09-03-2025 10:36 pm",
+                    "instructor_course": {
+                      "id": "69033a9c-3ef2-4c24-9252-7849db8c897d",
+                      "title": "COURSE_TITLE 3"
+                    },
+                    "instructor_course_coupon": {
+                      "id": "8sda92dfe-f001-4a31-9f1d-d989cef38",
+                      "discount": 25,
+                      "expiry_date": "2025-09-23"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/transactions": {
+      "get": {
+        "summary": "Get | Student Transaction ",
+        "description": "Endpoint ini digunakan untuk student menampilkan seluruh transaksi yang telah di buat",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil mengambil data",
+                  "data": {
+                    "current_page": 1,
+                    "data": [
+                      {
+                        "order_id": "67cdc0b4beb8c",
+                        "student_id": "student",
+                        "instructor_course_id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba",
+                        "amount": 15000,
+                        "midtrans_data": "{\"token\": \"edf5c88a-0e89-4b3c-b1d5-3713e0f669a2\", \"redirect_url\": \"https:\/\/app.sandbox.midtrans.com\/snap\/v4\/redirection\/edf5c88a-0e89-4b3c-b1d5-3713e0f669a2\"}",
+                        "status": "settlement",
+                        "created_at": "09-03-2025 04:24 pm"
+                      }
+                    ],
+                    "first_page_url": "http:\/\/localhost:8000\/api\/v1\/student\/transactions?page=1",
+                    "from": 1,
+                    "last_page": 1,
+                    "last_page_url": "http:\/\/localhost:8000\/api\/v1\/student\/transactions?page=1",
+                    "links": [
+                      {
+                        "url": null,
+                        "label": "&laquo; Sebelumnya",
+                        "active": false
+                      },
+                      {
+                        "url": "http:\/\/localhost:8000\/api\/v1\/student\/transactions?page=1",
+                        "label": "1",
+                        "active": true
+                      },
+                      {
+                        "url": null,
+                        "label": "Berikutnya &raquo;",
+                        "active": false
+                      }
+                    ],
+                    "next_page_url": null,
+                    "path": "http:\/\/localhost:8000\/api\/v1\/student\/transactions",
+                    "per_page": 10,
+                    "prev_page_url": null,
+                    "to": 1,
+                    "total": 1
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Post | Student Transaction",
+        "description": "Endpoint ini digunakan untuk student membuat transaksi baru",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil menyimpan data"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "instructor_course_id": "69033a9c-3ef2-4c24-9252-7849db8c897d",
+                  "instructor_course_coupon": ""
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Patch | Student Transaction",
+        "description": "Endpoint ini digunakan untuk student callback ketika berhasil melakukan pembayaran secara lunas",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil memperbarui data"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "order_id": "67cdc0b4beb8c",
+                  "status_code": 200,
+                  "gross_amount": "15000.00",
+                  "signature_key": "bdfe152c5e68455cf7176fe8188a7baeab6b07dffacba3a5459af1749ec1c74268b97873499696166527b75d7f57e014915384149e87aa6b1a867603fc206d37",
+                  "transaction_status": "settlement"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete | Student Transaction",
+        "description": "Endpoint ini digunakan untuk student cancel transaksi",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil menghapus data"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "order_id": "67ce17e5eb40d"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/transactions/check-coupon": {
+      "post": {
+        "summary": "Post | Student Transaction Check Coupon",
+        "description": "Endpoint ini digunakan untuk student untuk mengecek kupon",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil mendapatkan data",
+                  "data": {
+                    "id": "04699fb5-81da-481e-aa7d-2935e3fac81a",
+                    "instructor_course_id": "04699fb5-81da-481e-aa7d-2935e3fac81a",
+                    "discount": 20,
+                    "max_redemptions": 20,
+                    "expiry_date": "2025-05-08"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "instructor_course_id": "69033a9c-3ef2-4c24-9252-7849db8c897d"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/studies/courses": {
+      "get": {
+        "summary": "Get | Student Courses",
+        "description": "Endpoint ini digunakan untuk student menampilkan seluruh kursus yang diikuti, maksudnya data kursus didapat ketika student berhasil menyelesaikan pendaftaran",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil mengambil data",
+                  "data": {
+                    "current_page": 1,
+                    "data": [
+                      {
+                        "id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba",
+                        "title": "COURSE_TITLE",
+                        "description": "COURSE_DESCRIPTION",
+                        "image": "instructor-course-images\/4be8b5e6-8054-4c78-9b70-6510a24a37ba.jpg",
+                        "created_at": "09-03-2025 04:14 pm"
+                      }
+                    ],
+                    "first_page_url": "http:\/\/localhost:8000\/api\/v1\/student\/courses?page=1",
+                    "from": 1,
+                    "last_page": 1,
+                    "last_page_url": "http:\/\/localhost:8000\/api\/v1\/student\/courses?page=1",
+                    "links": [
+                      {
+                        "url": null,
+                        "label": "&laquo; Sebelumnya",
+                        "active": false
+                      },
+                      {
+                        "url": "http:\/\/localhost:8000\/api\/v1\/student\/courses?page=1",
+                        "label": "1",
+                        "active": true
+                      },
+                      {
+                        "url": null,
+                        "label": "Berikutnya &raquo;",
+                        "active": false
+                      }
+                    ],
+                    "next_page_url": null,
+                    "path": "http:\/\/localhost:8000\/api\/v1\/student\/courses",
+                    "per_page": 10,
+                    "prev_page_url": null,
+                    "to": 1,
+                    "total": 1
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/studies/sections": {
+      "get": {
+        "summary": "Get | Student Sections",
+        "description": "Endpoint ini digunakan untuk student menampilkan bab materi dari kursus yang diikuti",
+        "parameters": [
+          {
+            "name": "course_id",
+            "in": "query",
+            "description": "Id Kursus",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "4be8b5e6-8054-4c78-9b70-6510a24a37ba"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil mengambil data",
+                  "data": {
+                    "id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba",
+                    "instructor_id": "ilhamrhmtkbr",
+                    "title": "COURSE_TITLE",
+                    "description": "COURSE_DESCRIPTION",
+                    "image": "instructor-course-images\/4be8b5e6-8054-4c78-9b70-6510a24a37ba.jpg",
+                    "price": 15000,
+                    "level": "junior",
+                    "status": "paid",
+                    "visibility": "public",
+                    "notes": "COURSE_NOTES",
+                    "requirements": "COURSE_REQUIREMENTS",
+                    "editor": "php",
+                    "created_at": "09-03-2025 04:14 pm",
+                    "updated_at": "09-03-2025 04:14 pm",
+                    "sections": [
+                      {
+                        "id": 1,
+                        "title": "Section Title",
+                        "order_in_course": 1,
+                        "instructor_course_id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba"
+                      }
+                    ],
+                    "instructor": {
+                      "user_id": "ilhamrhmtkbr",
+                      "user": {
+                        "username": "ilhamrhmtkbr",
+                        "full_name": "Ilham Rahmat Akbar"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/studies/lessons": {
+      "get": {
+        "summary": "Get | Student Lessons",
+        "description": "Endpoint ini digunakan untuk student menampilkan materi dari bab kursus yang telah disimpan",
+        "parameters": [
+          {
+            "name": "section_id",
+            "in": "query",
+            "description": "Id Section",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil mengambil data",
+                  "data": {
+                    "current_page": 1,
+                    "data": [
+                      {
+                        "id": 1,
+                        "instructor_section_id": 1,
+                        "title": "Update section Title 1",
+                        "description": "Update section Description 1",
+                        "code": "Update section Code 1 Section Code 1 Section Code 1 Section Code 1 Section Code 1 Section Code 1",
+                        "order_in_section": 1
+                      }
+                    ],
+                    "first_page_url": "http:\/\/localhost:8000\/api\/v1\/student\/lessons?page=1",
+                    "from": 1,
+                    "last_page": 1,
+                    "last_page_url": "http:\/\/localhost:8000\/api\/v1\/student\/lessons?page=1",
+                    "links": [
+                      {
+                        "url": null,
+                        "label": "&laquo; Sebelumnya",
+                        "active": false
+                      },
+                      {
+                        "url": "http:\/\/localhost:8000\/api\/v1\/student\/lessons?page=1",
+                        "label": "1",
+                        "active": true
+                      },
+                      {
+                        "url": null,
+                        "label": "Berikutnya &raquo;",
+                        "active": false
+                      }
+                    ],
+                    "next_page_url": null,
+                    "path": "http:\/\/localhost:8000\/api\/v1\/student\/lessons",
+                    "per_page": 5,
+                    "prev_page_url": null,
+                    "to": 1,
+                    "total": 1
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/progresses/show": {
+      "get": {
+        "summary": "Get | Student Course Progress",
+        "description": "Endpoint ini digunakan untuk student menampilkan progress kursus secara detail",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id Progress Kursus",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "4be8b5e6-8054-4c78-9b70-6510a24a37ba"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Show data successfully",
+                  "data": {
+                    "id": "9cb92dfe-f001-4a31-9f1d-d989cef38515",
+                    "title": "COURSE_TITLE",
+                    "description": "COURSE_DESCRIPTION",
+                    "image": "COURSE_IMAGE",
+                    "price": 15000,
+                    "level": "junior",
+                    "status": "paid",
+                    "created_at": "12-04-2025 01:49 pm"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/progresses": {
+      "get": {
+        "summary": "Get | Student Course Progress",
+        "description": "Endpoint ini digunakan untuk student menampilkan seluruh data progress dari kursus",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil mengambil data",
+                  "data": {
+                    "current_page": 1,
+                    "data": [
+                      {
+                        "id": "9cb92dfe-f001-4a31-9f1d-d989cef38515",
+                        "title": "COURSE_TITLE",
+                        "completed_sections": 2,
+                        "total_sections": 2
+                      }
+                    ],
+                    "first_page_url": "http:\/\/localhost:8000\/api\/v1\/student\/course-progresses?page=1",
+                    "from": 1,
+                    "last_page": 1,
+                    "last_page_url": "http:\/\/localhost:8000\/api\/v1\/student\/course-progresses?page=1",
+                    "links": [
+                      {
+                        "url": null,
+                        "label": "&laquo; Sebelumnya",
+                        "active": false
+                      },
+                      {
+                        "url": "http:\/\/localhost:8000\/api\/v1\/student\/course-progresses?page=1",
+                        "label": "1",
+                        "active": true
+                      },
+                      {
+                        "url": null,
+                        "label": "Berikutnya &raquo;",
+                        "active": false
+                      }
+                    ],
+                    "next_page_url": null,
+                    "path": "http:\/\/localhost:8000\/api\/v1\/student\/course-progresses",
+                    "per_page": 10,
+                    "prev_page_url": null,
+                    "to": 1,
+                    "total": 1
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Post | Student Course Progress",
+        "description": "Endpoint ini digunakan untuk student menambahkan data progress baru",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil Menambahkan data"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "instructor_section_id": 1
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/reviews": {
+      "get": {
+        "summary": "Get | Student Course Review",
+        "description": "Endpoint ini digunakan untuk student menampilkan seluruh data review yang sudah dimasukan",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil mengambil data",
+                  "data": {
+                    "current_page": 1,
+                    "data": [
+                      {
+                        "id": 1,
+                        "instructor_course_id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba",
+                        "student_id": "student",
+                        "review": "Kursus yang sangat baguss",
+                        "rating": 10,
+                        "created_at": "09-03-2025 04:34 pm",
+                        "updated_at": "09-03-2025 04:34 pm"
+                      }
+                    ],
+                    "first_page_url": "http:\/\/localhost:8000\/api\/v1\/student\/course-reviews?page=1",
+                    "from": 1,
+                    "last_page": 1,
+                    "last_page_url": "http:\/\/localhost:8000\/api\/v1\/student\/course-reviews?page=1",
+                    "links": [
+                      {
+                        "url": null,
+                        "label": "&laquo; Sebelumnya",
+                        "active": false
+                      },
+                      {
+                        "url": "http:\/\/localhost:8000\/api\/v1\/student\/course-reviews?page=1",
+                        "label": "1",
+                        "active": true
+                      },
+                      {
+                        "url": null,
+                        "label": "Berikutnya &raquo;",
+                        "active": false
+                      }
+                    ],
+                    "next_page_url": null,
+                    "path": "http:\/\/localhost:8000\/api\/v1\/student\/course-reviews",
+                    "per_page": 10,
+                    "prev_page_url": null,
+                    "to": 1,
+                    "total": 1
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Post | Student Course Review",
+        "description": "Endpoint ini digunakan untuk student menambahkan review",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil menyimpan data"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "instructor_course_id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba",
+                  "review": "Kursus yang sangat baguss",
+                  "rating": 10
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Patch | Student Course Review",
+        "description": "Endpoint ini digunakan untuk student mengubah review ketika ada kesalahan data yang sudah terlanjur diinput",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil mengubah data"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "instructor_course_id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba",
+                  "review": "Kursus yang sangat baguss",
+                  "rating": 10
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete | Student Course Review",
+        "description": "Endpoint ini digunakan untuk student menghapus data review ketika tidak ada yang sesuai",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil menghapus data"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "id": 1
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/questions/show": {
+      "get": {
+        "summary": "Get | Student Question",
+        "description": "Endpoint ini digunakan untuk student menampilkan question secara detail",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id Pertanyaan",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil menampilkan data",
+                  "data": [
+                    {
+                      "id": 1,
+                      "question": "4be8b5e6-8054-4c78-9b70-6510a24a37ba",
+                      "created_at": "2025-03-09 23:35:11",
+                      "course_id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba",
+                      "course_title": "COURSE_TITLE",
+                      "answers_id": null,
+                      "answer": null,
+                      "answer_created_at": null
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    },
+    "/questions": {
+      "get": {
+        "summary": "Get | Student Question",
+        "description": "Endpoint ini digunakan untuk student menampilkan seluruh data question",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil mengambil data",
+                  "data": {
+                    "current_page": 1,
+                    "data": [
+                      {
+                        "id": 4,
+                        "instructor_course_id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba",
+                        "question": "Question 2",
+                        "created_at": "09-03-2025 09:49 pm",
+                        "updated_at": "09-03-2025 09:49 pm",
+                        "instructor_course": {
+                          "id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba",
+                          "title": "COURSE_TITLE"
+                        }
+                      },
+                      {
+                        "id": 3,
+                        "instructor_course_id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba",
+                        "question": "Question 1",
+                        "created_at": "09-03-2025 09:49 pm",
+                        "updated_at": "09-03-2025 09:49 pm",
+                        "instructor_course": {
+                          "id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba",
+                          "title": "COURSE_TITLE"
+                        }
+                      },
+                      {
+                        "id": 1,
+                        "instructor_course_id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba",
+                        "question": "4be8b5e6-8054-4c78-9b70-6510a24a37ba",
+                        "created_at": "09-03-2025 04:35 pm",
+                        "updated_at": "09-03-2025 04:35 pm",
+                        "instructor_course": {
+                          "id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba",
+                          "title": "COURSE_TITLE"
+                        }
+                      }
+                    ],
+                    "first_page_url": "http:\/\/localhost:8000\/api\/v1\/student\/questions?page=1",
+                    "from": 1,
+                    "last_page": 1,
+                    "last_page_url": "http:\/\/localhost:8000\/api\/v1\/student\/questions?page=1",
+                    "links": [
+                      {
+                        "url": null,
+                        "label": "&laquo; Sebelumnya",
+                        "active": false
+                      },
+                      {
+                        "url": "http:\/\/localhost:8000\/api\/v1\/student\/questions?page=1",
+                        "label": "1",
+                        "active": true
+                      },
+                      {
+                        "url": null,
+                        "label": "Berikutnya &raquo;",
+                        "active": false
+                      }
+                    ],
+                    "next_page_url": null,
+                    "path": "http:\/\/localhost:8000\/api\/v1\/student\/questions",
+                    "per_page": 10,
+                    "prev_page_url": null,
+                    "to": 3,
+                    "total": 3
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Post | Student Question",
+        "description": "Endpoint ini digunakan untuk student ingin bertanya terkait kursus yang diikuti",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil menyimpan data"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "instructor_course_id": "4be8b5e6-8054-4c78-9b70-6510a24a37ba",
+                  "question": "Question 2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Patch | Student Question",
+        "description": "Endpoint ini digunakan untuk student mengubah pertanyaan dari sebelumnya",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Berhasil mengubah data"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "id": 3,
+                  "question": "Question 3"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete | Student Question",
+        "description": "Endpoint ini digunakan untuk student menghapus pertanyaan, (pertanyaan dapat dihapus ketika instructor belum menjawab)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id Pertanyaan",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          },
+          {
+            "$ref": "#/components/securitySchemes/CookieAuth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        },
+        "security": [
+          {
+            "CookieAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "CookieAuth": []
+    }
+  ]
+}

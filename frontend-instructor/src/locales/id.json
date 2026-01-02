@@ -1,0 +1,127 @@
+{
+  "instructor": "Instruktur",
+  "student": "Siswa",
+
+  "username": "Username",
+  "full_name": "Nama Lengkap",
+  "email": "Surel",
+  "role": "Jabatan",
+  "address": "Alamat",
+  "since": "Sejak",
+  "dob": "Tanggal Lahir",
+  "category": "Kategori",
+  "download": "Unduh",
+  "summary": "Ringkasan",
+
+  "profile": "Profil",
+  "courses": "Kursus",
+  "questions": "Pertanyaan",
+  "earnings": "Pendapatan",
+  "reviews": "Ulasan",
+  "setting": "Pengaturan",
+  "forum": "Forum",
+  "logout": "Keluar",
+  "socials": "Media Sosial",
+
+  "detail": "Rincian",
+
+  "answer": "Jawaban",
+  "question": "Pertanyaan",
+  "review": "Ulasan",
+  "rating": "Penilaian",
+
+  "course": "Kursus",
+  "description": "Deskripsi",
+  "price": "Harga",
+  "level": "Tingkat",
+  "status": "Status",
+  "notes": "Catatan",
+  "visibility": "Visibilitas",
+  "requirements": "Persyaratan",
+  "editor": "Editor",
+  "created_at": "Dibuat pada",
+  "updated_at": "Diperbarui pada",
+  "image": "Foto",
+
+  "course_title": "Judul Kursus",
+  "courses_likes": "Jumlah Kursus disukai",
+
+  "coupons": "Kupon",
+  "max_redemptions": "Penukaran Maksimal",
+  "expiry_date": "Tanggal Kedaluwarsa",
+  "discount": "Potongan Harga",
+
+  "success_copy": "Teks berhasil disalin",
+
+  "you_havent_added_data_yet": "Anda belum menambahkan data",
+  "data_not_found": "Data yang Anda cari tidak ditemukan",
+
+  "add": "Tambah",
+  "see": "Lihat",
+  "edit": "Ubah",
+  "remove": "Hapus",
+  "cancel": "Batal",
+  "update": "Perbarui",
+  "delete": "Hapus",
+  "example": "Contoh",
+
+  "action": "Aksi",
+
+  "url_link": "Tautan Url",
+  "display_name": "Nama yang akan ditampilkan",
+
+  "title": "Judul",
+  "order_in_course": "Urutan dalam kursus",
+  "order_in_section": "Urutan dalam bab",
+
+  "sections": "Bab",
+  "lessons": "Materi",
+
+  "my_courses": "Kursus Saya",
+  "my_answers": "Jawaban Saya",
+  "my_earnings": "Pendapatan Saya",
+  "my_reviews": "Ulasan Saya",
+  "my_coupons": "Kupon Saya",
+
+  "alias_name": "Nama Alias",
+  "bank": "Bank",
+  "account": "Rekening",
+
+  "search": "Cari",
+
+  "inst_earnings_button": "Tarik Dana",
+  "inst_earnings_no_data": "Anda belum memiliki penghasilan",
+  "inst_account_explanation_1": "Masukkan nomor rekening bank Anda tanpa kode di depannya.",
+  "inst_account_explanation_2": "Silakan klik pada input di bawah untuk melihat daftar bank yang tersedia.",
+  "inst_account_explanation_3": "Contoh yang benar: ilhambca7",
+  "inst_account_button": "Cairkan penghasilan Anda sekarang",
+  "inst_coupons_form_id": "Untuk mengetahui ID kursus, silakan buka halaman kursus dan klik detail.",
+  "inst_coupons_form_discount": "Kisaran diskon antara 1-99",
+  "inst_coupons_form_max_redemptions": "Kisaran penukaran maksimum antara 1-100",
+  "inst_coupons_form_expiry_date": "Tanggal kedaluwarsa dapat dipilih 2 hari kemudian",
+  "inst_coupons_warning": "Jika Anda ingin menambahkan kupon, silakan buka halaman detail kursus dan pilih tombol 'tambah kupon'.",
+  "inst_socials_explanation_1": "Contoh: https://instagram.com/ilhamrhmtkbr",
+  "inst_answers_no_data": "Belum ada pertanyaan dari siswa kepada Anda",
+  "inst_answers_warning": "Anda belum menjawab pertanyaan dari siswa",
+  "inst_reviews_no_data": "Belum ada ulasan dari siswa",
+
+  "app_router_role_permission" : "Anda belum mendaftarkan peran atau peran Anda tidak sesuai, silakan sesuaikan profil Anda sekarang.",
+  "certificate_verify" : "Verifikasi Sertifikat",
+
+  "validation": {
+    "required": "{{attribute}} wajib diisi.",
+    "number": "{{attribute}} kolom harus berupa angka",
+    "min": "{{attribute}} minimal {{min}} karakter.",
+    "max": "{{attribute}} maksimal {{max}} karakter.",
+    "no_profanity_sentence": "Kalimat ini mengandung kata kasar : \"{{sentence}}\"",
+    "only_lowercase": "{{attribute}} hanya boleh huruf kecil tanpa spasi.",
+    "image_format": "Gambar harus berupa base64 yang valid (jpeg, png, jpg, gif, svg, atau webp).",
+    "max_image_size": "Ukuran gambar tidak boleh lebih dari {{maxMB}}MB.",
+    "date": "{{attribute}} harus berupa tanggal yang valid.",
+    "date-min": "Setidaknya tanggalnya tidak cocok",
+    "email": "{{attribute}} harus berupa alamat email yang valid.",
+    "max_file": "Ukuran file maksimal {{max}}.",
+    "invalid_file_type": "Tipe file tidak didukung.",
+    "enum": "Silakan pilih sesuai dengan pilihan berikut : {{enum}}"
+  }
+}

@@ -1,0 +1,29 @@
+# Dependency & cache
+**/backend-*/vendor
+
+# Environment & config lokal
+**/backend-*/.env.*
+
+# Logs & cache
+**/backend-*/storage/logs
+**/backend-*/storage/framework/cache
+**/backend-*/storage/framework/sessions
+**/backend-*/storage/framework/views
+**/backend-*/storage/framework/testing
+**/backend-*/bootstrap/cache/*.php
+
+# Test & dev files
+**/backend-*/.phpunit.result.cache
+
+# VCS & editor
+**/backend-*/.git
+**/backend-*/.gitignore
+**/backend-*/.gitattributes
+**/backend-*/.idea
+**/backend-*/.vscode
+**/backend-*/.editorconfig
+
+# System files
+**/backend-*/.DS_Store
+**/backend-*/Thumbs.db
+**/backend-*/README.md

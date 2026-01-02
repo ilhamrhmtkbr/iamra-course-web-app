@@ -1,0 +1,42 @@
+name: Security Scan
+on:
+  workflow_call:
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Composer Security Audit
+        run: |
+          for service in user student instructor forum public; do
+            if [ -d "backend-api-$service" ]; then
+              cd backend-api-$service
+
+              if [ "$service" = "forum" ]; then
+                composer install --no-interaction --ignore-platform-req=ext-mongodb
+              else
+                composer install --no-interaction
+              fi
+
+              composer audit || echo "⚠️ Security vulnerabilities found"
+              cd ..
+            else
+              echo "⚠️ backend-api-$service skipped (folder not found)"
+            fi
+          done
+
+      - name: NPM Security Audit
+        run: |
+          for service in user student instructor forum public; do
+            if [ -d "frontend-$service" ]; then
+              cd frontend-$service
+              npm ci
+              npm audit --audit-level=high || echo "⚠️ Security vulnerabilities found"
+              cd ..
+            else
+              echo "⚠️ frontend-$service skipped (folder not found)"
+            fi
+          done

@@ -1,0 +1,282 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Api Public",
+    "description": "Dirancang untuk bisa diakses oleh siapa saja",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Ilham Rahmat Akbar",
+      "email": "ilhamrhmtkbr@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "description": "RESTful API Server",
+      "url": "{environment}",
+      "variables": {
+        "environment": {
+          "description": "Server Environtment",
+          "default": "auth-api",
+          "enum": [
+            "https://unique-id.ngrok-free.app/public-api/v1",
+            "http://localhost:8000/public-api/v1",
+            "http://public-api.course.iamra.site",
+            "https://public-api.course.iamra.site"
+          ]
+        }
+      }
+    }
+  ],
+  "components": {
+    "parameters": {
+      "AcceptLanguage": {
+        "name": "Accept-Language",
+        "in": "header",
+        "description": "Bahasa Yang di Gunakan",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "id"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/courses": {
+      "get": {
+        "summary": "Get | Ambil semua data courses",
+        "description": "Endpoint ini digunakan untuk mengambil seluruh data kursus yang tersedia di platform. Data mencakup nama kursus, deskripsi, level, instruktur, dan sebagainya.",
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": [
+                    {
+                      "id": "04699fb5-81da-481e-aa7d-2935e3fac81a",
+                      "title": "Belajar PHP dari Dasar",
+                      "description": "Kursus ini akan membahas dasar-dasar PHP mulai dari sintaks dasar, variabel, tipe data, hingga konsep OOP. Cocok untuk pemula yang ingin memahami bagaimana PHP digunakan dalam pengembangan web.",
+                      "image": "courses"
+                    },
+                    {
+                      "id": "07e21fd2-c9bd-4934-a161-f2920454122f",
+                      "title": "Menguasai Git dan Version Control",
+                      "description": "Pelajari bagaimana menggunakan Git untuk version control, mulai dari dasar hingga fitur lanjutan seperti branching, merging, rebase, dan collaborative development menggunakan GitHub\/GitLab.",
+                      "image": "courses"
+                    },
+                    {
+                      "id": "1ccd82b7-3f16-41a5-a7e0-2dac0869e0ff",
+                      "title": "Pemrograman C++ untuk Pemula",
+                      "description": "Kursus ini akan membahas pemrograman C++ dari dasar, mencakup struktur kode, variabel, tipe data, loop, hingga konsep Object-Oriented Programming (OOP).",
+                      "image": "courses"
+                    },
+                    {
+                      "id": "57750f38-163f-47d9-9e0a-82621c650648",
+                      "title": "Pemrograman MySQL untuk Database",
+                      "description": "Dalam kursus ini, Anda akan belajar bagaimana menggunakan MySQL untuk mengelola database, termasuk pembuatan tabel, penggunaan query SQL, optimasi database, indexing, dan transaksi database.",
+                      "image": "courses"
+                    }
+                  ],
+                  "links": {
+                    "first": "http:\/\/localhost:8000\/api\/v1\/courses?page=1",
+                    "last": "http:\/\/localhost:8000\/api\/v1\/courses?page=2",
+                    "prev": null,
+                    "next": "http:\/\/localhost:8000\/api\/v1\/courses?page=2"
+                  },
+                  "meta": {
+                    "current_page": 1,
+                    "from": 1,
+                    "last_page": 2,
+                    "links": [
+                      {
+                        "url": null,
+                        "label": "&laquo; Previous",
+                        "active": false
+                      },
+                      {
+                        "url": "http:\/\/localhost:8000\/api\/v1\/courses?page=1",
+                        "label": "1",
+                        "active": true
+                      },
+                      {
+                        "url": "http:\/\/localhost:8000\/api\/v1\/courses?page=2",
+                        "label": "2",
+                        "active": false
+                      },
+                      {
+                        "url": "http:\/\/localhost:8000\/api\/v1\/courses?page=2",
+                        "label": "Next &raquo;",
+                        "active": false
+                      }
+                    ],
+                    "path": "http:\/\/localhost:8000\/api\/v1\/courses",
+                    "per_page": 4,
+                    "to": 4,
+                    "total": 7
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/course": {
+      "get": {
+        "summary": "Get | Get detail course",
+        "description": "Endpoint ini digunakan untuk mengambil data detail kursus yang dipilih",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID dari course",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "abc123"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Get data successfully",
+                  "data": {
+                    "course": {
+                      "id": "9cb92dfe-f001-4a31-9f1d-d989cef38515",
+                      "instructor_id": "ilhamrhmtkbr",
+                      "title": "COURSE_TITLE",
+                      "description": "COURSE_DESCRIPTION",
+                      "image": "COURSE_IMAGE",
+                      "price": 15000,
+                      "level": "junior",
+                      "status": "paid",
+                      "notes": "COURSE_NOTES",
+                      "requirements": "COURSE_REQUIREMENTS",
+                      "instructor": {
+                        "user_id": "ilhamrhmtkbr",
+                        "resume": "resume",
+                        "summary": "summary",
+                        "user": {
+                          "username": "ilhamrhmtkbr",
+                          "full_name": "Ilham Rahmat Akbar"
+                        },
+                        "socials": []
+                      }
+                    },
+                    "likes": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/section": {
+      "get": {
+        "summary": "Get | Get detail section from course",
+        "description": "Menampilkan materi dari kursus yang dipilih",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID dari course",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "abc123"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Get data successfully",
+                  "data": {
+                    "likes": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/student/certificate/verify": {
+      "get": {
+        "summary": "Get | Student Certificate Verify",
+        "description": "Digunakan untuk verifikasi sertifikat yang didapatkan oleh student",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id Sertifikat",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "7669491f-d926-4621-b2a4-f5dec8a01502"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/AcceptLanguage"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "Get data successfully",
+                  "data": {
+                    "id": "8sdAbcDef-f001-4a31-9f1d-d989cef38",
+                    "student_id": "student",
+                    "instructor_course_id": "9cb92dfe-f001-4a31-9f1d-d989cef38515",
+                    "created_at": "12-04-2025 01:29 pm",
+                    "instructor_course": {
+                      "id": "9cb92dfe-f001-4a31-9f1d-d989cef38515",
+                      "title": "COURSE_TITLE"
+                    },
+                    "student": {
+                      "user_id": "student",
+                      "user": {
+                        "username": "student",
+                        "full_name": "Student"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "authorization failed"
+          },
+          "422": {
+            "description": "validation failed"
+          },
+          "500": {
+            "description": "unknown server error"
+          }
+        }
+      }
+    }
+  }
+}

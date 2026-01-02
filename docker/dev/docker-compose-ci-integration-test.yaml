@@ -1,0 +1,109 @@
+services:
+  database-mysql:
+    image: mysql:8.0
+    container_name: database-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: iamra_course
+    networks:
+      - iamra_net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      retries: 10
+      timeout: 10s
+
+  database-redis:
+    image: redis:latest
+    container_name: database-redis
+    networks:
+      - iamra_net
+
+  database-mongo:
+    image: mongo:latest
+    container_name: database-mongo
+    networks:
+      - iamra_net
+
+  backend-api-user:
+    build:
+      context: ../../
+      dockerfile: docker/dev/backend-laravel/user/Dockerfile.api-user
+    container_name: backend-api-user
+    volumes:
+      - "../../backend-api-user:/app"
+    depends_on:
+      database-mysql:
+        condition: service_healthy
+      database-redis:
+        condition: service_started
+      database-mongo:
+        condition: service_started
+    networks:
+      - iamra_net
+
+  backend-api-student:
+    build:
+      context: ../../
+      dockerfile: docker/dev/backend-laravel/student/Dockerfile.api-student
+    container_name: backend-api-student
+    volumes:
+      - "../../backend-api-student:/app"
+    depends_on:
+      database-mysql:
+        condition: service_healthy
+      database-redis:
+        condition: service_started
+      database-mongo:
+        condition: service_started
+    networks:
+      - iamra_net
+
+  backend-api-instructor:
+    build:
+      context: ../../
+      dockerfile: docker/dev/backend-laravel/instructor/Dockerfile.api-instructor
+    container_name: backend-api-instructor
+    volumes:
+      - "../../backend-api-instructor:/app"
+    depends_on:
+      database-mysql:
+        condition: service_healthy
+      database-redis:
+        condition: service_started
+      database-mongo:
+        condition: service_started
+    networks:
+      - iamra_net
+
+  backend-api-forum:
+    build:
+      context: ../../
+      dockerfile: docker/dev/backend-laravel/forum/Dockerfile.api-forum
+    container_name: backend-api-forum
+    volumes:
+      - "../../backend-api-forum:/app"
+    depends_on:
+      - backend-api-user
+    networks:
+      - iamra_net
+
+  backend-api-public:
+    build:
+      context: ../../
+      dockerfile: docker/dev/backend-laravel/public/Dockerfile.api-public
+    container_name: backend-api-public
+    volumes:
+      - "../../backend-api-public:/app"
+    depends_on:
+      database-mysql:
+        condition: service_healthy
+      database-redis:
+        condition: service_started
+      database-mongo:
+        condition: service_started
+    networks:
+      - iamra_net
+
+networks:
+  iamra_net:
+    driver: bridge

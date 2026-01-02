@@ -1,0 +1,31 @@
+FROM php:8.2-cli
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    gosu \
+    git curl \
+    libpng-dev libjpeg-dev libfreetype6-dev \
+    libmagickwand-dev \
+    zip unzip \
+    libssl-dev libcurl4-openssl-dev \
+    libicu-dev \
+    libzip-dev \
+    libonig-dev \
+    libxml2-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo_mysql mbstring bcmath gd zip opcache pcntl sockets \
+    && pecl install imagick redis \
+    && docker-php-ext-enable imagick redis \
+    && apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+RUN groupadd -g 1000 ilhamrhmtkbr && useradd -u 1000 -g ilhamrhmtkbr -m ilhamrhmtkbr
+
+COPY docker/dev/backend-laravel/_shared/php-custom-api-shared.ini /usr/local/etc/php/conf.d/99-custom.ini
+COPY docker/dev/backend-laravel/_shared/entrypoint-api-shared.sh /usr/local/bin/entrypoint.sh
+
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
