@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ResponseApiHelper
 {
-    public static function send(null|string|\Exception $item, int $code, mixed $data = null): \Illuminate\Http\JsonResponse
+    public static function send(null|string|\Exception $item, int|string $code, mixed $data = null): \Illuminate\Http\JsonResponse
     {
         if ($item instanceof ModelNotFoundException) {
             $message = 'Data not found';
@@ -22,6 +22,9 @@ class ResponseApiHelper
             $code = Response::HTTP_FORBIDDEN;
         } else if ($item instanceof \Exception) {
             $message = $item->getMessage();
+            if ($code == 0 || !is_numeric($code)) {
+                $code = Response::HTTP_INTERNAL_SERVER_ERROR;
+            }
         } else {
             $message = $item;
         }

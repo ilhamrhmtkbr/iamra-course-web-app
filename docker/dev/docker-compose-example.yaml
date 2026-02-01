@@ -222,9 +222,9 @@ services:
       - "../../frontend-user:/app"
       - "./frontend-react/.env.shared:/app/.env"
     environment:
-      - VITE_API_KEY_OPEN_CAGE_DATA=1c364950870b42049cebeb19d1669abe
-      - VITE_GOOGLE_RECAPTCHA_V2_SITE_KEY=6Ld0xFwsAAAAACgFynPuky0o8gyoWSmE_FRHmbPw
-      - VITE_GOOGLE_CLIENT_ID=723747076134-vn70q594els9goqg4ptq1ipon8tt1g0j.apps.googleusercontent.com
+      - VITE_API_KEY_OPEN_CAGE_DATA=YOUR_API_KEY_OPEN_CAGE_DATA
+      - VITE_GOOGLE_RECAPTCHA_V2_SITE_KEY=YOUR_GOOGLE_RECAPTCHA_CLIENT_ID
+      - VITE_GOOGLE_CLIENT_ID=YOUR_GOOGLE_CLIENT_ID
     depends_on:
       - backend-api-user
     networks:
@@ -341,7 +341,7 @@ services:
     depends_on:
       - server-nginx
     environment:
-      NGROK_AUTHTOKEN: "2a0uiHZxc8OP2aVKaOn7dUlhG2f_5Fj1qNovroHTHhLxHR5mM"
+      NGROK_AUTHTOKEN: "YOUR_NGROK_AUTHTOKEN"
     command: "http server-nginx:80"
     networks:
       - iamra_net

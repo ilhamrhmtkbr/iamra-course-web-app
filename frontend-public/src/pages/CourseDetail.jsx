@@ -126,6 +126,8 @@ export default function CourseDetail() {
                                 minWidth: 275,
                                 maxHeight: 275
                             }}
+                            loading="lazy"
+                            decoding="async"
                             src={import.meta.env.VITE_APP_IMAGE_COURSE_URL + courseDetail?.course?.image}
                             alt={courseDetail?.course?.title}
                         />
@@ -134,7 +136,7 @@ export default function CourseDetail() {
                             <div className={'loading-spinner'}></div> :
                             <div onClick={() => handleLike(courseDetail?.course?.id)}
                                  className={'flex-aic-jcc cursor-pointer w-max-content gap-s radius-s border-style-default p-s'}>
-                                <SvgComp rule={`svg-l fill-blue-hover ${courseDetail?.isLikes ? 'fill-blue' : ''}`}
+                                <SvgComp rule={`svg-l fill-primary-hover ${courseDetail?.isLikes ? 'fill-primary' : ''}`}
                                          file={'sprite'}
                                          icon={'like'}/>
                                 <p className={'text-center font-bold'}>{courseDetail?.likes}</p>

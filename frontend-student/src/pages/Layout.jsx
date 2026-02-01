@@ -25,7 +25,7 @@ const Layout = () => {
         <>
             <header className={'header'}>
                 <a className={'header-logo'} href={import.meta.env.VITE_APP_FRONTEND_PUBLIC_URL}>
-                    <img src={'/iamra-logo.svg'} className={'header-logo-img'} alt={import.meta.env.VITE_APP_NAME}/>
+                    <img src={'./iamra-logo.svg'} className={'header-logo-img'} alt={import.meta.env.VITE_APP_NAME}/>
                     <span>{import.meta.env.VITE_APP_NAME}</span>
                 </a>
 
@@ -40,16 +40,16 @@ const Layout = () => {
             </header>
             <nav>
                 <a href={import.meta.env.VITE_APP_FRONTEND_PUBLIC_URL} className={'flex-aic-jcc gap-s'}>
-                    <SvgComp rule={'svg-m fill-text fill-blue-hover'} file={'sprite'} icon={'homepage'} />
+                    <SvgComp rule={'svg-m fill-text fill-primary-hover'} file={'sprite'} icon={'homepage'} />
                     <span className={'capitalize'}>{t('homepage')}</span>
                 </a>
                 <a href={import.meta.env.VITE_APP_FRONTEND_USER_URL + '/member/additional-info#top'}
                    className={'flex-aic-jcc gap-s'}>
-                    <SvgComp rule={'svg-m fill-text fill-blue-hover'} file={'sprite'} icon={'setting'} />
+                    <SvgComp rule={'svg-m fill-text fill-primary-hover'} file={'sprite'} icon={'setting'} />
                     <span>{t('setting')}</span>
                 </a>
                 <a href={import.meta.env.VITE_APP_FRONTEND_FORUM_URL} className={'flex-aic-jcc gap-s'}>
-                    <SvgComp rule={'svg-m fill-text fill-blue-hover'} file={'sprite'} icon={'forum'} />
+                    <SvgComp rule={'svg-m fill-text fill-primary-hover'} file={'sprite'} icon={'forum'} />
                     <span>{t('forum')}</span>
                 </a>
             </nav>
@@ -134,7 +134,7 @@ const Layout = () => {
             </main>
             <footer>
                 <div className="grid-start">
-                    <img src={'/iamra-logo.svg'}
+                    <img src={'./iamra-logo.svg'}
                          style={{
                              maxWidth: 31,
                              maxHeight: 31

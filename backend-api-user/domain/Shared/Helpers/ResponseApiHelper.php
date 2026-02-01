@@ -8,13 +8,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ResponseApiHelper
 {
-    public static function send(null|string|\Exception $item, int $code, mixed $data = null, string $cookieToken = ''): \Illuminate\Http\JsonResponse
+    public static function send(null|string|\Exception $item, int|string $code, mixed $data = null, string $cookieToken = ''): \Illuminate\Http\JsonResponse
     {
         if ($item instanceof ValidationException) {
             $message = $item->validator->errors()->first();
             $code = Response::HTTP_UNPROCESSABLE_ENTITY;
         } elseif ($item instanceof \Exception) {
             $message = $item->getMessage();
+            if ($code == 0 || !is_numeric($code)) {
+                $code = Response::HTTP_INTERNAL_SERVER_ERROR;
+            }
         } else {
             $message = $item;
         }

@@ -11,4 +11,5 @@ return [
     'password_same' => 'Old password and New password can\'t be same',
     'invalid_token' => 'Invalid token',
     'token_expired' => 'Token expired',
+    'recaptcha_failed' => 'reCAPTCHA: Verification Failed',
 ];

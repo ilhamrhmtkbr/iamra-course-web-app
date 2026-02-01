@@ -62,7 +62,7 @@ export default function Courses() {
                             <option value="Python"/>
                         </datalist>
                         <div className={'cursor-pointer'} onClick={handleSearch}>
-                            <SvgComp rule={'svg-m fill-text fill-blue-hover'} file={'sprite'} icon={'search'}/>
+                            <SvgComp rule={'svg-m fill-text fill-primary-hover'} file={'sprite'} icon={'search'}/>
                         </div>
                     </div>
                     <div style={{display:'grid', gridTemplateColumns: 'repeat(3, 1fr)'}} className={'gap-m'}>

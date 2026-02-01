@@ -37,7 +37,7 @@ class InstructorUpdateCreateAction
                     Storage::disk('local')->delete('user-resume/' . $oldResume->resume);
                 }
 
-                $file?->storeAs('user-resume', $fileName);
+                $file?->storeAs('user-resume', $fileName, 'local');
 
                 Instructor::updateOrCreate(['user_id' => $username], [
                     'resume' => $fileName ?? '',

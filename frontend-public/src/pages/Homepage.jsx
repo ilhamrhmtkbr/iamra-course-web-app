@@ -26,7 +26,7 @@ export default function Homepage() {
                     <div className={'bg-trans-primary flex-ais-jcc gap-m radius-l p-x'}>
                         <div className={'font-medium font-size-x text-center'}>
                             <p>{t('about_download_the_mobile_version_of_the_android_application')} </p>
-                            <a href={'http://ilhamrhmtkbr.github.io/iamra-course-apk/'}
+                            <a href={'https://ilhamrhmtkbr.github.io/iamra-course-apk/#installation'}
                                className={'text-primary capitalize cursor-pointer text-hover-underline'}>{t('now')}</a>
                         </div>
                         <div className={'badge-button-close'} onClick={() => setBannerHide(true)}>
@@ -57,7 +57,7 @@ export default function Homepage() {
                         <HashLink className={'button btn-primary ps-center mt-m'}
                                   smooth to={'#info'}>
                             <p>{t("about_great_button")}</p>
-                            <SvgComp rule={'svg-s fill-blue margin-left-s'} file={'sprite'} icon={'mouse'}/>
+                            <SvgComp rule={'svg-s fill-primary margin-left-s'} file={'sprite'} icon={'mouse'}/>
                         </HashLink>
                     </div>
                 </div>
@@ -115,7 +115,7 @@ export default function Homepage() {
                                         </div>
                                     </div>
 
-                                    <div className="timeline-divider"></div>
+                                    {(i + 1) != 5 && <div className="timeline-divider"></div>}
                                 </Fragment>
                             ))}
                         </div>
@@ -131,7 +131,7 @@ export default function Homepage() {
                                         </div>
                                     </div>
 
-                                    <div className="timeline-divider"></div>
+                                    {(i + 1) != 5 && <div className="timeline-divider"></div>}
                                 </Fragment>
                             ))}
                         </div>

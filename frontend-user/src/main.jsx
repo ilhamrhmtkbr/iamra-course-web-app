@@ -6,7 +6,7 @@ import './i18n.js';
 
 createRoot(document.getElementById('top')).render(
     <StrictMode>
-        <GoogleOAuthProvider clientId={"501957692849-nprqfdeclrvjseadfs3bpru3arci95eg.apps.googleusercontent.com"}>
+        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
             <AppRouter/>
         </GoogleOAuthProvider>
     </StrictMode>

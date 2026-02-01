@@ -15,8 +15,14 @@ class LoginWithGoogleAction
     public function __invoke(Request $request): JsonResponse
     {
         try {
+            $captchaType = $request->header('X-Client-Type') === 'android' ? 'enterprise' : 'v2';
             $captcha = new CaptchaAction();
-            $captcha($request->captcha);
+            if (!$captcha($request->captcha, $captchaType)) {
+                return ResponseApiHelper::send(
+                    Lang::get('request-auth.recaptcha_failed'),
+                    Response::HTTP_UNPROCESSABLE_ENTITY
+                );
+            }
 
             $valid = validator(
                 ['email' => $request->email],

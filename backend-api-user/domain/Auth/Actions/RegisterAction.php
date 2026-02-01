@@ -16,8 +16,14 @@ class RegisterAction
     public function __invoke(RegisterRequest $request): JsonResponse
     {
         try {
+            $captchaType = $request->header('X-Client-Type') === 'android' ? 'enterprise' : 'v2';
             $captcha = new CaptchaAction();
-            $captcha($request->captcha);
+            if (!$captcha($request->captcha, $captchaType)) {
+                return ResponseApiHelper::send(
+                    Lang::get('request-auth.recaptcha_failed'),
+                    Response::HTTP_UNPROCESSABLE_ENTITY
+                );
+            }
 
             ['username' => $username] = $request->validated();
             $user = User::where('username', $username)->select(['username'])->first();

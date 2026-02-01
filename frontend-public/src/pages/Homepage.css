@@ -5,7 +5,7 @@
 }
 
 .about__anm__container {
-    padding-inline: 2rem;
+    padding: var(--m) 0;
     overflow: hidden;
     position: relative;
     background-color: var(--second-bg-color);

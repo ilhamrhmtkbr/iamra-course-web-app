@@ -11,4 +11,5 @@ return [
     'password_same' => 'Kata sandi lama dan baru tidak boleh sama',
     'invalid_token' => 'Token tidak valid',
     'token_expired' => 'Token telah kedaluwarsa',
+    'recaptcha_failed' => 'reCAPTCHA: Verifikasi Gagal',
 ];

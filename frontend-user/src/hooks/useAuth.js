@@ -43,7 +43,11 @@ const useAuth = () => {
             await loginWithGoogle(formData);
             onSuccess();
         } catch ({response}) {
-            setErrorsFromBackend(response)
+            if (response?.data?.errors) {
+                setErrorsFromBackend(response?.data?.errors);
+            } else {
+                setErrorsFromBackend(response?.data)
+            }
         } finally {
             setLoading(false);
         }

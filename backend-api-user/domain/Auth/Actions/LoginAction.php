@@ -6,9 +6,7 @@ use Domain\Auth\Requests\LoginRequest;
 use Domain\Shared\Models\User;
 use Domain\Shared\Helpers\ResponseApiHelper;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -17,12 +15,14 @@ class LoginAction
     public function __invoke(LoginRequest $request): ?JsonResponse
     {
         try {
-            $data = DB::connection('mysql')
-                ->table('users')
-                ->get();
-
+            $captchaType = $request->header('X-Client-Type') === 'android' ? 'enterprise' : 'v2';
             $captcha = new CaptchaAction();
-            $captcha($request->captcha);
+            if (!$captcha($request->captcha, $captchaType)) {
+                return ResponseApiHelper::send(
+                    Lang::get('request-auth.recaptcha_failed'),
+                    Response::HTTP_UNPROCESSABLE_ENTITY
+                );
+            }
 
             ['username' => $username, 'password' => $password] = $request->validated();
 

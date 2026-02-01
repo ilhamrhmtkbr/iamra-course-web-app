@@ -57,6 +57,8 @@ services:
       - .env.secret-user
     volumes:
       - ../../backend-api-user/domain/Shared/Helpers/ResponseApiHelper.php:/app/domain/Shared/Helpers/ResponseApiHelper.php
+      - ../../backend-api-user/domain/Member/Actions/InstructorUpdateCreateAction.php:/app/domain/Member/Actions/InstructorUpdateCreateAction.php
+      - ../../backend-api-user/domain/Member/Requests/InstructorUpdateCreateRequest.php:/app/domain/Member/Requests/InstructorUpdateCreateRequest.php
       - shared-sockets:/var/run/sockets:rw
       - backend_api_user_images:/app/storage/app/public/user-images
     networks:

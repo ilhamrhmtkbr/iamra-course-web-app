@@ -34,14 +34,14 @@ style html tags first, so that the fonts work properly.
     --link-color: #5f6368;
     --translink-color: #5f636811;
     --border-color: #ebebeb;
-    --red-color: #ef2323;
-    --transred-color: #ef232311;
-    --orange-color: #ff7200;
-    --transorange-color: #ff720011;
-    --green-color: #009f4d;
-    --transgreen-color: #009f4d17;
-    --blue-color: #0060fa;
-    --transblue-color: #0060fa11;
+    --danger-color: #ef2323;
+    --transdanger-color: #ef232311;
+    --warning-color: #ff7200;
+    --transwarning-color: #ff720011;
+    --success-color: #009f4d;
+    --transsuccess-color: #009f4d17;
+    --primary-color: #0060fa;
+    --transprimary-color: #0060fa11;
     --border: 1px solid var(--border-color);
     --box-shadow: 0px 0px 10px rgba(36, 45, 87, 0.1);
     -webkit-box-shadow: 0 0 10px rgba(36, 45, 87, 0.1);
@@ -77,17 +77,17 @@ body.dark-mode {
     --border: 1px solid var(--border-color);
     --box-shadow: color-mix(in srgb, rgb(0, 0, 0) 30%, transparent) 0 1px 2px 0, color-mix(in srgb, rgb(0, 0, 0) 15%, transparent) 0 2px 6px 2px;
 
-    --red-color: #ff5c5c;
-    --transred-color: #ff5c5c22;
+    --danger-color: #ff5c5c;
+    --transdanger-color: #ff5c5c22;
 
-    --orange-color: #ffb84d;
-    --transorange-color: #ffb84d22;
+    --warning-color: #ffb84d;
+    --transwarning-color: #ffb84d22;
 
-    --green-color: #4ade80;
-    --transgreen-color: #4ade8022;
+    --success-color: #4ade80;
+    --transsuccess-color: #4ade8022;
 
-    --blue-color: #4da6ff;
-    --transblue-color: #4da6ff22;
+    --primary-color: #4da6ff;
+    --transprimary-color: #4da6ff22;
 }
 
 ::-webkit-scrollbar {
@@ -170,19 +170,19 @@ ol {
 }
 
 .border-primary {
-    border-color: var(--blue-color);
+    border-color: var(--primary-color);
 }
 
 .border-warning {
-    border-color: var(--orange-color);
+    border-color: var(--warning-color);
 }
 
 .border-danger {
-    border-color: var(--red-color);
+    border-color: var(--danger-color);
 }
 
 .border-success {
-    border-color: var(--green-color);
+    border-color: var(--success-color);
 }
 
 .radius-x {
@@ -375,6 +375,7 @@ ol {
     padding: var(--m);
     border: var(--border);
     border-radius: var(--radius-s);
+    max-width: 85dvw;
 }
 
 .accordion-item-check {
@@ -426,51 +427,51 @@ ol {
 
 /* Background */
 .bg-primary {
-    background-color: var(--blue-color);
+    background-color: var(--primary-color);
 }
 
 .bg-trans-primary {
-    background-color: var(--transblue-color);
+    background-color: var(--transprimary-color);
 }
 
 .bg-trans-primary-hover:hover {
-    background-color: var(--blue-color);
+    background-color: var(--primary-color);
 }
 
 .bg-danger {
-    background-color: var(--red-color);
+    background-color: var(--danger-color);
 }
 
 .bg-trans-danger {
-    background-color: var(--transred-color);
+    background-color: var(--transdanger-color);
 }
 
 .bg-trans-danger-hover:hover {
-    background-color: var(--red-color);
+    background-color: var(--danger-color);
 }
 
 .bg-warning {
-    background-color: var(--orange-color);
+    background-color: var(--warning-color);
 }
 
 .bg-trans-warning {
-    background-color: var(--transorange-color);
+    background-color: var(--transwarning-color);
 }
 
 .bg-trans-warning-hover:hover {
-    background-color: var(--orange-color);
+    background-color: var(--warning-color);
 }
 
 .bg-success {
-    background-color: var(--green-color);
+    background-color: var(--success-color);
 }
 
 .bg-trans-success {
-    background-color: var(--transgreen-color);
+    background-color: var(--transsuccess-color);
 }
 
 .bg-trans-success-hover:hover {
-    background-color: var(--green-color);
+    background-color: var(--success-color);
 }
 
 .bg-gradient {
@@ -480,8 +481,8 @@ ol {
     background-color: var(--bg-color);
     /* add var 2 gradient */
     /* .example {
-      --first-gradient-color: var(--transblue-color);
-      --second-gradient-color: var(--transred-color);
+      --first-gradient-color: var(--transprimary-color);
+      --second-gradient-color: var(--transdanger-color);
     } */
     /*background-image: linear-gradient(160deg, var(--first-gradient-color) 0%, var(--second-gradient-color) 100%);*/
 }
@@ -529,23 +530,23 @@ ol {
     font-weight: bold;
     border: var(--border);
     border-width: 1.5px;
-    border-color: var(--red-color);
+    border-color: var(--danger-color);
     border-radius: 99px;
-    color: var(--red-color);
+    color: var(--danger-color);
     background-color: var(--bg-color);
     font-size: var(--s);
     cursor: pointer;
 }
 
 .badge-button-close:hover {
-    background-color: var(--red-color);
+    background-color: var(--danger-color);
     color: white;
 }
 
 .badge-button-close svg {
     max-width: 10px;
     max-height: 10px;
-    fill: var(--red-color);
+    fill: var(--danger-color);
 }
 
 .badge-button-close:hover svg {
@@ -557,23 +558,23 @@ ol {
 }
 
 .badge-primary {
-    background-color: var(--transblue-color);
-    color: var(--blue-color);
+    background-color: var(--transprimary-color);
+    color: var(--primary-color);
 }
 
 .badge-danger {
-    background-color: var(--transred-color);
-    color: var(--red-color);
+    background-color: var(--transdanger-color);
+    color: var(--danger-color);
 }
 
 .badge-warning {
-    background-color: var(--transorange-color);
-    color: var(--orange-color);
+    background-color: var(--transwarning-color);
+    color: var(--warning-color);
 }
 
 .badge-success {
-    background-color: var(--transgreen-color);
-    color: var(--green-color);
+    background-color: var(--transsuccess-color);
+    color: var(--success-color);
 }
 
 /* Badge */
@@ -614,9 +615,9 @@ ol {
 }
 
 .bottom-sheet-header:hover {
-    background-color: var(--transblue-color);
-    color: var(--blue-color);
-    fill: var(--blue-color);
+    background-color: var(--transprimary-color);
+    color: var(--primary-color);
+    fill: var(--primary-color);
     transform: scale(1.07);
 }
 
@@ -663,7 +664,7 @@ ol {
 
 .breadcrumb-item:hover,
 .breadcrumb-item.active {
-    color: var(--blue-color);
+    color: var(--primary-color);
 }
 
 /* Breadcrumb */
@@ -721,71 +722,71 @@ ol {
 }
 
 .button.btn-primary {
-    color: var(--blue-color);
+    color: var(--primary-color);
 }
 
 .button:hover.btn-primary {
-    border-color: var(--blue-color);
+    border-color: var(--primary-color);
 }
 
 .button:hover.bg-primary,
 .button:hover.btn-primary {
-    outline-color: var(--transblue-color);
+    outline-color: var(--transprimary-color);
 }
 
 .button:hover.badge-primary {
-    background-color: var(--blue-color);
+    background-color: var(--primary-color);
 }
 
 .button.btn-danger {
-    color: var(--red-color);
+    color: var(--danger-color);
 }
 
 .button:hover.btn-danger {
-    border-color: var(--red-color);
+    border-color: var(--danger-color);
 }
 
 .button:hover.bg-danger,
 .button:hover.btn-danger {
-    outline-color: var(--transred-color);
+    outline-color: var(--transdanger-color);
 }
 
 .button:hover.badge-danger {
-    background-color: var(--red-color);
+    background-color: var(--danger-color);
 }
 
 .button.btn-warning {
-    color: var(--orange-color);
+    color: var(--warning-color);
 }
 
 .button:hover.btn-warning {
-    border-color: var(--orange-color);
+    border-color: var(--warning-color);
 }
 
 .button:hover.bg-warning,
 .button:hover.btn-warning {
-    outline-color: var(--transorange-color);
+    outline-color: var(--transwarning-color);
 }
 
 .button:hover.badge-warning {
-    background-color: var(--orange-color);
+    background-color: var(--warning-color);
 }
 
 .button.btn-success {
-    color: var(--green-color);
+    color: var(--success-color);
 }
 
 .button:hover.btn-success {
-    border-color: var(--green-color);
+    border-color: var(--success-color);
 }
 
 .button:hover.bg-success,
 .button:hover.btn-success {
-    outline-color: var(--transgreen-color);
+    outline-color: var(--transsuccess-color);
 }
 
 .button:hover.badge-success {
-    background-color: var(--green-color);
+    background-color: var(--success-color);
 }
 
 .hover-progress {
@@ -801,7 +802,7 @@ ol {
     bottom: 0;
     left: 50%;
     border-radius: 4px;
-    background-color: var(--blue-color);
+    background-color: var(--primary-color);
     transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
     transform: translateX(-50%);
 }
@@ -877,7 +878,7 @@ ol {
     display: grid;
     gap: var(--m);
     padding-left: var(--xx);
-    border-left: 5px solid var(--blue-color);
+    border-left: 5px solid var(--primary-color);
     border-radius: var(--m);
 }
 
@@ -996,24 +997,24 @@ ol {
     fill: var(--text-color);
 }
 
-.fill-blue-hover:hover,
-.fill-blue {
-    fill: var(--blue-color);
+.fill-primary-hover:hover,
+.fill-primary {
+    fill: var(--primary-color);
 }
 
-.fill-red-hover:hover,
-.fill-red {
-    fill: var(--red-color);
+.fill-danger-hover:hover,
+.fill-danger {
+    fill: var(--danger-color);
 }
 
-.fill-orange-hover:hover,
-.fill-orange {
-    fill: var(--orange-color);
+.fill-warning-hover:hover,
+.fill-warning {
+    fill: var(--warning-color);
 }
 
-.fill-green-hover:hover,
-.fill-green {
-    fill: var(--green-color);
+.fill-success-hover:hover,
+.fill-success {
+    fill: var(--success-color);
 }
 
 /* -- dimen swiper -- */
@@ -1290,9 +1291,9 @@ textarea {
 
 input::-webkit-file-upload-button {
     cursor: pointer;
-    border: 1px solid var(--blue-color);
+    border: 1px solid var(--primary-color);
     outline: none;
-    color: var(--blue-color);
+    color: var(--primary-color);
     background-color: var(--bg-color);
     padding: 7px var(--xs);
     min-width: 63px;
@@ -1304,7 +1305,7 @@ input::-webkit-file-upload-button {
 
 input::-webkit-file-upload-button:hover {
     color: var(--bg-color);
-    background-color: var(--blue-color);
+    background-color: var(--primary-color);
 }
 
 input:-webkit-autofill,
@@ -1364,7 +1365,7 @@ textarea.textarea-clear-style {
 
 .form-like-google-input:focus,
 .form-like-google-input:not(:placeholder-shown) {
-    border-color: var(--blue-color);
+    border-color: var(--primary-color);
 }
 
 .form-like-google-input:focus + .form-like-google-label,
@@ -1372,7 +1373,7 @@ textarea.textarea-clear-style {
     top: 0;
     font-size: var(--s);
     background-color: var(--bg-color);
-    color: var(--blue-color);
+    color: var(--primary-color);
     padding: 0 4px;
 }
 
@@ -1690,7 +1691,7 @@ footer {
 
 .pagination-item:hover,
 .pagination-item.active {
-    background-color: var(--blue-color);
+    background-color: var(--primary-color);
     color: white;
 }
 
@@ -1816,12 +1817,12 @@ main.has-sidebar.active .sidebar-menu-item[data-title]:hover::after {
 .sidebar-menu-item:hover,
 .sidebar-menu-item.active {
     border-color: var(--border-color);
-    color: var(--blue-color);
+    color: var(--primary-color);
 }
 
 .sidebar-menu-item:hover .sidebar-menu-button-svg,
 .sidebar-menu-item.active .sidebar-menu-button-svg {
-    fill: var(--blue-color);
+    fill: var(--primary-color);
 }
 
 main.has-sidebar section {
@@ -1874,7 +1875,7 @@ main.has-sidebar.active .sidebar-menu-item {
 
 .stepper-key.active,
 .stepper-key:hover {
-    background-color: var(--blue-color);
+    background-color: var(--primary-color);
     color: white;
 }
 
@@ -1886,7 +1887,7 @@ main.has-sidebar.active .sidebar-menu-item {
 .stepper-divider {
     height: 1px;
     min-width: 111px;
-    background-color: var(--blue-color);
+    background-color: var(--primary-color);
 }
 
 /* Stepper */
@@ -2007,7 +2008,7 @@ td.action :hover {
     transform: translateY(-50%);
     width: calc(var(--xxs) / 2 + 2px);
     height: var(--xx);
-    background-color: var(--blue-color);
+    background-color: var(--primary-color);
     border-radius: 90px;
 }
 
@@ -2015,7 +2016,7 @@ td.action :hover {
     font-size: var(--x);
     position: relative;
     font-family: Medium, ui-sans-serif;
-    color: var(--blue-color);
+    color: var(--primary-color);
     padding-left: var(--s);
     width: max-content;
     max-width: 85dvw;
@@ -2043,35 +2044,35 @@ td.action :hover {
 }
 
 .text-primary {
-    color: var(--blue-color);
+    color: var(--primary-color);
 }
 
 .text-danger {
-    color: var(--red-color);
+    color: var(--danger-color);
 }
 
 .text-warning {
-    color: var(--orange-color);
+    color: var(--warning-color);
 }
 
 .text-success {
-    color: var(--green-color);
+    color: var(--success-color);
 }
 
 .text-primary-hover:hover {
-    color: var(--blue-color);
+    color: var(--primary-color);
 }
 
 .text-danger-hover:hover {
-    color: var(--red-color);
+    color: var(--danger-color);
 }
 
 .text-warning-hover:hover {
-    color: var(--orange-color);
+    color: var(--warning-color);
 }
 
 .text-success-hover:hover {
-    color: var(--green-color);
+    color: var(--success-color);
 }
 
 .text-link {
@@ -2097,7 +2098,7 @@ td.action :hover {
     font-family: Light, ui-sans-serif;
     font-size: var(--s);
     font-weight: bold;
-    color: var(--red-color);
+    color: var(--danger-color);
     margin-top: 2px;
 }
 
@@ -2145,7 +2146,7 @@ td.action :hover {
 
 .timeline-key.active,
 .timeline-key:hover {
-    background-color: var(--blue-color);
+    background-color: var(--primary-color);
     color: white;
 }
 
@@ -2169,7 +2170,7 @@ td.action :hover {
     min-height: 63px;
     width: 2px;
     margin-left: 20px;
-    background-color: var(--blue-color);
+    background-color: var(--primary-color);
 }
 
 /* Timeline */
@@ -2208,9 +2209,9 @@ td.action :hover {
     font-weight: bold;
     border: var(--border);
     border-width: 1.5px;
-    border-color: var(--red-color);
+    border-color: var(--danger-color);
     border-radius: 99px;
-    color: var(--red-color);
+    color: var(--danger-color);
     background-color: var(--bg-color);
     font-size: var(--s);
     cursor: pointer;
@@ -2219,7 +2220,7 @@ td.action :hover {
 }
 
 .toast-button-close:hover {
-    background-color: var(--red-color);
+    background-color: var(--danger-color);
     border-color: white;
     color: white;
 }
@@ -2227,7 +2228,7 @@ td.action :hover {
 .toast-button-close svg {
     max-width: 10px;
     max-height: 10px;
-    fill: var(--red-color);
+    fill: var(--danger-color);
 }
 
 .toast-button-close:hover svg {
@@ -2251,7 +2252,7 @@ td.action :hover {
 
 .toggle:hover{
     transform: scale(1.02);
-    border-color: var(--blue-color);
+    border-color: var(--primary-color);
 }
 
 .dark-mode .toggle {

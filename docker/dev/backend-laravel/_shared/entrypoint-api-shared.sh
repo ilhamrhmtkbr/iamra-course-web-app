@@ -12,4 +12,4 @@ fi
 chown -R ilhamrhmtkbr:ilhamrhmtkbr /app/storage /app/bootstrap/cache
 chmod -R 775 /app/storage /app/bootstrap/cache
 
-exec gosu ilhamrhmtkbr php artisan serve --host=0.0.0.0 --port=8080
+exec gosu ilhamrhmtkbr sh -c "php artisan optimize:clear && php artisan serve --host=0.0.0.0 --port=8080"

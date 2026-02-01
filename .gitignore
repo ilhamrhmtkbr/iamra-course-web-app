@@ -11,6 +11,7 @@
 **/backend-api-*/.env.local
 **/backend-api-*/.env.production
 **/backend-api-*/.env.staging
+**/backend-api-*/composer.lock
 **/docker/dev/frontend-react/.env.shared
 **/docker/dev/backend-laravel/_shared/.env.shared
 !**/docker/prod/frontend-react/.env.shared
@@ -68,6 +69,7 @@
 **/docker/volumes/
 **/docker/data/
 **/.docker/
+**/docker/dev/docker-compose.yaml
 
 # Development environment files
 **/docker/dev/backend-laravel/_shared/.env.shared

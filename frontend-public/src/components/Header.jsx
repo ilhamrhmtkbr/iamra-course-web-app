@@ -27,7 +27,7 @@ const Header = memo(() => {
     return <>
         <header className={'header'}>
             <div className={'header-logo'}>
-                <img src={'/iamra-logo.svg'} className={'header-logo-img'} alt={import.meta.env.VITE_APP_NAME}/>
+                <img src={'./iamra-logo.svg'} className={'header-logo-img'} alt={import.meta.env.VITE_APP_NAME}/>
                 <span>{import.meta.env.VITE_APP_NAME}</span>
             </div>
 
@@ -54,7 +54,7 @@ const Header = memo(() => {
         </header>
         <nav>
             <HashLink className={'flex-aic-jcc gap-s'} to="/courses#top">
-                <SvgComp rule={'svg-m fill-text fill-blue-hover'} file={'sprite'} icon={'courses'} />
+                <SvgComp rule={'svg-m fill-text fill-primary-hover'} file={'sprite'} icon={'courses'} />
                 <span>{t('courses')}</span>
             </HashLink>
             {user ?
@@ -64,17 +64,17 @@ const Header = memo(() => {
                         import.meta.env.VITE_APP_FRONTEND_INSTRUCTOR_URL :
                         import.meta.env.VITE_APP_FRONTEND_USER_URL + '/member/additional-info#top'}
                    className={'flex-aic-jcc gap-s'}>
-                    <SvgComp rule={'svg-m fill-text fill-blue-hover'} file={'sprite'} icon={'profile'} />
+                    <SvgComp rule={'svg-m fill-text fill-primary-hover'} file={'sprite'} icon={'profile'} />
                     <span>{t(user.role)}</span>
                 </a> :
                 <a href={import.meta.env.VITE_APP_FRONTEND_USER_URL + '/authentication#top'}
                    className={'flex-aic-jcc gap-s'}>
-                    <SvgComp rule={'svg-m fill-text fill-blue-hover'} file={'sprite'} icon={'profile'} />
+                    <SvgComp rule={'svg-m fill-text fill-primary-hover'} file={'sprite'} icon={'profile'} />
                     <span>Login</span>
                 </a>
             }
             <HashLink className={'flex-aic-jcc gap-s'} to="/#top">
-                <SvgComp rule={'svg-m fill-text fill-blue-hover'} file={'sprite'} icon={'homepage'} />
+                <SvgComp rule={'svg-m fill-text fill-primary-hover'} file={'sprite'} icon={'homepage'} />
                 <span className={'capitalize'}>{t('home')}</span>
             </HashLink>
         </nav>

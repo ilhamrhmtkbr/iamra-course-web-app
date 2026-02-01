@@ -14,7 +14,7 @@ const Footer = memo(() => {
     return (
         <footer>
             <div className="grid-start">
-                <img src={'/iamra-logo.svg'}
+                <img src={'./iamra-logo.svg'}
                      style={{
                          maxWidth: 31,
                          maxHeight: 31

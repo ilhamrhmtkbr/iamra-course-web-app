@@ -30,7 +30,7 @@ class RegisterRequest extends FormRequest
             'first_name' => ['required', 'string', 'min:2', 'max:33', new NoProfanity()],
             'middle_name' => ['required', 'string', 'min:2', 'max:33', new NoProfanity()],
             'last_name' => ['required', 'string', 'min:2', 'max:33', new NoProfanity()],
-            'username' => ['required', 'string', 'regex:/^[a-z]+$/', 'min:5', 'max:45', new NoProfanity()],
+            'username' => ['required', 'string', 'regex:/^[a-z0-9]+$/', 'min:5', 'max:45', new NoProfanity()],
             'password' => ['required', 'confirmed', Password::min(5)->max(20)->letters()->mixedCase()->numbers()->symbols()]
         ];
     }

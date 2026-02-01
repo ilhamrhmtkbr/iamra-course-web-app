@@ -12,6 +12,8 @@ const CourseCardComp = memo(({children, title, desc, image}) => {
                  style={{
                      height: '100%'
                  }}
+                 loading="lazy"
+                 decoding="async"
                  alt={title}/>
             <div className={'box-border p-m'}
                  style={{

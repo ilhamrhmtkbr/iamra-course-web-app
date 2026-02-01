@@ -7,7 +7,7 @@ export const registerSchema = (t) =>
         middle_name: minMaxValidation(t, "middle_name"),
         last_name: minMaxValidation(t, "last_name"),
         username: minMaxValidation(t, "username", 5, 45)
-            .matches(/^[a-z]+$/, withAttribute("validation.only_lowercase", t, "username")),
+            .matches(/^[a-z0-9]+$/, withAttribute("validation.only_lowercase", t, "username")),
         password: minMaxValidation(t, "password", 5,20)
             .matches(/[a-z]/, withAttribute("validation.letters", t, "password"))
             .matches(/[A-Z]/, withAttribute("validation.uppercase", t, "password"))
@@ -23,7 +23,7 @@ export const registerSchema = (t) =>
 export const loginSchema = t =>
     yup.object().shape({
         username: minMaxValidation(t, "username", 5, 45)
-            .matches(/^[a-z]+$/, withAttribute("validation.only_lowercase", t, "username")),
+            .matches(/^[a-z0-9]+$/, withAttribute("validation.only_lowercase", t, "username")),
         password: minMaxValidation(t, "password", 5,20)
             .matches(/[a-z]/, withAttribute("validation.letters", t, "password"))
             .matches(/[A-Z]/, withAttribute("validation.uppercase", t, "password"))
@@ -72,7 +72,7 @@ export const memberUpdateAdditionalInfoSchema = t =>
 export const memberUpdateAuthenticationSchema = t =>
     yup.object().shape({
         username: minMaxValidation(t, "username", 5, 45)
-            .matches(/^[a-z]+$/, withAttribute("validation.only_lowercase", t, "username")),
+            .matches(/^[a-z0-9]+$/, withAttribute("validation.only_lowercase", t, "username")),
         old_password: minMaxValidation(t, "old_password", 5,20)
             .matches(/[a-z]/, withAttribute("validation.letters", t, "old_password"))
             .matches(/[A-Z]/, withAttribute("validation.uppercase", t, "old_password"))

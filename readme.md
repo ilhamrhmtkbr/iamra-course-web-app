@@ -65,6 +65,7 @@ Iamra Course adalah platform e-learning berbasis mikroservice yang dibangun untu
 ### Third-Party Integrations
 - **Midtrans** untuk payment processing dan instructor payouts (beneficiaries/withdraw)
 - **Google OAuth** untuk autentikasi di frontend untuk mendapatkan cred email, tetap menggunakan jwt
+- **Google Recaptcha** untuk validasi apakah bukan robot
 - **Slack** untuk logging dan notifikasi
 - **Ngrok** untuk development tunneling
 
@@ -134,7 +135,9 @@ Sebelum memulai, pastikan Anda memiliki:
 
 ### 3. **Google Cloud Console** untuk OAuth:
 - Kunjungi [Google Cloud Console](https://console.cloud.google.com/)
+- Setup project-id dan api key sesuaikan di masing masing env
 - Setup credentials untuk OAuth integration
+- Setup recaptcha untuk frontend , android, backend. Untuk frontend kunjungi [Recaptcha V2](https://www.google.com/recaptcha/admin) dan untuk backend/android bisa [Recaptcha Enterprise Api](https://console.cloud.google.com/security/recaptcha)
 
 ### 4. **Slack Workspace** untuk logging dan notifikasi
 
@@ -198,7 +201,6 @@ php artisan jwt:secret
 **Update Konfigurasi:**
 - Copy Ngrok URL (contoh: `https://0df89e0367cd.ngrok-free.app`)
 - Update `docker/dev/frontend-react/.env.shared`
-- Update `backend-api-user/config/jwt.php` cookie domain settings
 - Sesuaikan Midtrans payment notification callback URL
 
 ### 5. 🗄️ Setup Database

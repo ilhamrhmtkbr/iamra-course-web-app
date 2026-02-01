@@ -62,7 +62,7 @@ export default function Authentication() {
 
     return (
         <main style={{
-            background: "url('/bg-auth.jpg')",
+            background: "url('./bg-auth.jpg')",
             placeContent: 'center',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
@@ -138,7 +138,7 @@ export default function Authentication() {
                     <ToastComp type={'danger'} msg={errorsFromBackend?.message} handleOnClose={closeMessage}/>}
 
                 <ReCAPTCHA
-                    sitekey={import.meta.env.VITE_API_KEY_RECAPTCHA}
+                    sitekey={import.meta.env.VITE_GOOGLE_RECAPTCHA_V2_SITE_KEY}
                     onChange={token => setCaptcha(token)}
                 />
 

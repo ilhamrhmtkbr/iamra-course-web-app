@@ -3,7 +3,7 @@
 # Composer install jika vendor belum ada
 if [ ! -f /app/vendor/autoload.php ]; then
   echo "🔧 Running composer install..."
-  composer install --prefer-dist --optimize-autoloader
+  composer install --prefer-dist --optimize-autoloader --ignore-platform-req=ext-mongodb
 else
   echo "✅ Vendor already installed. Skipping composer install."
 fi

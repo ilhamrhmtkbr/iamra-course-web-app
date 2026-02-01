@@ -19,7 +19,7 @@ class AuthenticationUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => ['required', 'string', 'regex:/^[a-z]+$/', 'min:5', 'max:45', new NoProfanity()],
+            'username' => ['required', 'string', 'regex:/^[a-z0-9]+$/', 'min:5', 'max:45', new NoProfanity()],
             'old_password' => ['required', Password::min(5)->max(20)->letters()->mixedCase()->numbers()->symbols()],
             'new_password' => ['nullable', Password::min(5)->max(20)->letters()->mixedCase()->numbers()->symbols()]
         ];
