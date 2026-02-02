@@ -29,7 +29,7 @@ export default function Layout() {
         <>
             <header className={'header'}>
                 <a className={'header-logo'} href={import.meta.env.VITE_APP_FRONTEND_PUBLIC_URL}>
-                    <img src={'./iamra-logo.svg'} className={'header-logo-img'} alt={import.meta.env.VITE_APP_NAME}/>
+                    <img src={import.meta.env.BASE_URL + 'iamra-logo.svg'} className={'header-logo-img'} alt={import.meta.env.VITE_APP_NAME}/>
                     <span>{import.meta.env.VITE_APP_NAME}</span>
                 </a>
 
@@ -124,7 +124,7 @@ export default function Layout() {
 
             <footer>
                 <div className="grid-start">
-                    <img src={'./iamra-logo.svg'}
+                    <img src={import.meta.env.BASE_URL + 'iamra-logo.svg'}
                          style={{
                              maxWidth: 31,
                              maxHeight: 31
